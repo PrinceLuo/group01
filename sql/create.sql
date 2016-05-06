@@ -8,10 +8,6 @@ drop table hotel;
 drop table staff;
 drop table customer;
 
-
-
-
-
 --staff information
 
 create table staff(
@@ -39,8 +35,9 @@ create table room_type(
 	id int not null generated always as identity,
 	room_type varchar(10) not null unique,
 	constraint chk_room_type check (room_type = 'Single' or room_type = 'Twin' or room_type = 'Queen' or room_type = 'Executive' or room_type = 'Suite'),
-	price int not null,
+	price decimal not null,
 	available_num int not null,
+	hotel_id int not null,
 	constraint chk_price check (price >= 0),
 	primary key (id)
 );
