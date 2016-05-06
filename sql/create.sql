@@ -38,7 +38,10 @@ create table room_type(
 	available_num int not null,
 	hotel_id int not null,
 	constraint chk_price check (price >= 0),
-	primary key (id)
+	constraint chk_num check (available_num >= 0),
+	hotel_id int not null,
+	primary key (id),
+	foreign key (hotel_id) references hotel(id)
 );
 
 create table room(
@@ -70,7 +73,7 @@ create table credit_card(
 	id int not null generated always as identity,
 	card_type varchar(20) not null,
 	constraint chk_card_type check (card_type = 'VISA' or card_type = 'MasterCard' or card_type = 'America Express' or card_type = 'JCB' or card_type = 'UnionPay'),
-	card_num decimal(16) not null,
+	card_num varchar(10) not null,
 	customer_id int not null,
 	primary key (id),
 	foreign key (customer_id) references customer(id)
@@ -94,7 +97,7 @@ create table discount(
 create table booking(
 	id int not null generated always as identity,
 	customer_id int not null,
-	pin int not null,
+	pin varchar(10) not null,
 	url varchar(50) not null,
 	primary key (id),
 	foreign key (customer_id) references customer(id)

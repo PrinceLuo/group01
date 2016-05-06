@@ -16,7 +16,6 @@ public class DBConnectionFactory {
 	private static DBConnectionFactory factory = null;
 	private DataSource ds = null;
 	private InitialContext ctx;
-	@SuppressWarnings("unused")
 	private Context subctx;
 	
 	private DBConnectionFactory() throws ServiceLocatorException{
