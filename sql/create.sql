@@ -19,7 +19,6 @@ create table staff(
 	primary key (id)
 );
 
-
 --room information
 create table hotel (
 	id int not null generated always as identity,
@@ -33,7 +32,7 @@ create table hotel (
 
 create table room_type(
 	id int not null generated always as identity,
-	room_type varchar(10) not null unique,
+	room_type varchar(10) not null,
 	constraint chk_room_type check (room_type = 'Single' or room_type = 'Twin' or room_type = 'Queen' or room_type = 'Executive' or room_type = 'Suite'),
 	price decimal not null,
 	available_num int not null,
@@ -53,7 +52,6 @@ create table room(
 	foreign key (room_type_id) references room_type(id),
 	foreign key (hotel_id) references hotel(id)
 );
-
 
 --customer information
 create table customer(
@@ -117,4 +115,3 @@ create table detail(
 	foreign key (hotel_id) references hotel(id),
 	foreign key (room_type_id) references room_type(id)
 );
-
