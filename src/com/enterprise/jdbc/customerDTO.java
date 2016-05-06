@@ -14,10 +14,8 @@ public class customerDTO {
 	private List<creditcardDTO> creditcardlist;
 	private List<bookingDTO> bookinglist;
 	
-	public customerDTO(String username, String password, String email){
-		this.username = username;
-		this.password = password;
-		this.email = email;
+	public customerDTO(){
+		
 	}
 	
 	public customerDTO(int id, String username, String password, String email){
@@ -30,8 +28,14 @@ public class customerDTO {
 	public int getID(){
 		return this.id;
 	}
+	public void setID(int id){
+		this.id = id;
+	}
 	public String getUsername(){
 		return this.username;
+	}
+	public void setUsername(String username){
+		this.username = username;
 	}
 	public String getPassword(){
 		return this.password;
@@ -39,7 +43,9 @@ public class customerDTO {
 	public String getEmail(){
 		return this.email;
 	}
-	
+	public void setEmail(String email){
+		this.email = email;
+	}
 	public void setPassword(String password){
 		this.password = password;
 	}
