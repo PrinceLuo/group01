@@ -35,7 +35,7 @@ create table room_type(
 	room_type varchar(10) not null,
 	constraint chk_room_type check (room_type = 'Single' or room_type = 'Twin' or room_type = 'Queen' or room_type = 'Executive' or room_type = 'Suite'),
 	price decimal not null,
-	available_num int not null,
+	total_num int not null,
 	hotel_id int not null,
 	constraint chk_price check (price >= 0),
 	constraint chk_num check (available_num >= 0),
@@ -84,6 +84,7 @@ create table discount(
 	id int not null generated always as identity,
 	room_type_id int not null,
 	hotel_id int not null,
+	current_date date not null,
 	start_date date not null,
 	end_date date not null,
 	rate decimal(3,2) not null,
@@ -97,8 +98,7 @@ create table discount(
 create table booking(
 	id int not null generated always as identity,
 	customer_id int not null,
-	pin varchar(10) not null,
-	url varchar(50) not null,
+	pin varchar(10),
 	primary key (id),
 	foreign key (customer_id) references customer(id)
 );
@@ -106,6 +106,7 @@ create table booking(
 create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
+	current_date date not null,
 	start_date date not null,
 	end_date date not null,
 	hotel_id int not null,
@@ -113,6 +114,8 @@ create table detail(
 	extra_bed int not null,
 	constraint chk_extra_bed check (extra_bed = 0 or extra_bed = 1),
 	num_rooms int not null,
+	level varchar(10) not null,
+	constraint chk_l check ( level = 'pend' or level = 'confirm'),
 	primary key (id),
 	foreign key (booking_id) references booking(id),
 	foreign key (hotel_id) references hotel(id),

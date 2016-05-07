@@ -6,7 +6,7 @@ public class roomDTO {
 	private int hotel_id;
 	private int number;
 	private String availability;
-	private detailDTO detail;//used for assign and update roomtype.available_num
+	private detailDTO detail;
 	
 	public roomDTO(){
 		

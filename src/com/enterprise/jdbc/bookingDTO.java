@@ -6,18 +6,17 @@ public class bookingDTO {
 	private int id;
 	private int customer_id;
 	private String pin;
-	private String url;
 	private List<detailDTO> detaillist;
 	
 	public bookingDTO(){
 		
 	}
 	
-	public bookingDTO(int id, int customer_id, String pin, String url){
+	public bookingDTO(int id, int customer_id, String pin){
 		this.id = id;
 		this.customer_id = customer_id;
 		this.pin = pin;
-		this.url = url;
+
 	}
 	
 	public int getID(){
@@ -39,12 +38,6 @@ public class bookingDTO {
 		this.pin = pin;
 	}
 	
-	public String getUrl(){
-		return this.url;
-	}
-	public void setUrl(String url){
-		this.url = url;
-	}
 	public List<detailDTO> getDetaillist(){
 		return this.detaillist;
 	}

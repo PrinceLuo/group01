@@ -7,7 +7,7 @@ public class roomtypeDTO {
 	private int id;
 	private String room_type;
 	private BigDecimal price;
-	private int available_num;
+	private int num;
 	private int hotel_id;
 	private List<roomDTO> room;
 	private discountDTO discount;
@@ -20,7 +20,7 @@ public class roomtypeDTO {
 		this.id = id;
 		this.room_type = room_type;
 		this.price = price;
-		this.available_num = available_num;
+		this.num = available_num;
 		this.hotel_id = hotel_id;
 	}
 	
@@ -42,11 +42,11 @@ public class roomtypeDTO {
 	public void setPrice(BigDecimal price){
 		this.price = price;
 	}
-	public int getAvailablenum(){
-		return this.available_num;
+	public int getNum(){
+		return this.num;
 	}
-	public void setAvailablenum(int available_num){
-		this.available_num = available_num;
+	public void setNum(int available_num){
+		this.num = available_num;
 	}
 	public int getHotelid(){
 		return this.hotel_id;
