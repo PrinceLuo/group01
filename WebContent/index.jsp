@@ -36,4 +36,4 @@ for (int i = 0; i < 2; i++) {
 <% } %>
 </TABLE>
 </body>
-</html>"WebContent/home.jsp"
+</html>
