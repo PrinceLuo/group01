@@ -9,7 +9,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import com.enterprise.exception.ServiceLocatorException;
 
-
 public class DBConnectionFactory {
 	
 	static Logger logger = Logger.getLogger(DBConnectionFactory.class.getName());
