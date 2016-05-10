@@ -1,13 +1,14 @@
 package com.enterprise.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ServicesFactory {
 	
-	private static String USER_SER = "userService";
-	private static String MANAGER_SER = "managerService";
-	private static String OWNER_SER = "ownerService";
-	private Map services;
+	private String USER_SER = "userService";
+	private String MANAGER_SER = "managerService";
+	private String OWNER_SER = "ownerService";
+	private Map services = new HashMap();
 	private static ServicesFactory instance = new ServicesFactory();
 	
 	private ServicesFactory(){

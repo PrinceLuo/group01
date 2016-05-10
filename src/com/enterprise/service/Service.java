@@ -1,14 +1,14 @@
 
 package com.enterprise.service;
 
-import com.enterprise.beans.*;
+import com.enterprise.beans.UserBean;
 
 /**
  * @author group01
- * Services that handle the requests from front
- * Methods are implemented in ServiceImpl
+ * Warning: All the method will return null; methods need to be written in xxxServiceImpl
  */
-public interface Service {
+public abstract class Service {
+
 	
 	/**
 	 * Finds a user with the given details
@@ -17,8 +17,13 @@ public interface Service {
 	 * @return A user if one exists with the given details
 	 * You may add and exception handler later
 	 */
-	UserBean login(String username, String password);
+	public UserBean login(String username, String password){
+		return null;
+	}
 	
+	public String register(String newuser, String newpassword, String newemail){
+		return null;
+	}
 	/**
 	 * Need to add more methods later
 	 */

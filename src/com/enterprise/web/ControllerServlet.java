@@ -1,41 +1,61 @@
 package com.enterprise.web;
 
+
+
 import java.io.IOException;
-import javax.servlet.ServletConfig;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
- * Servlet implementation class ControllerServlet
+ * Servlet implementation class ControlServlet
  */
-@WebServlet(description = "Front flow control, for navigating", urlPatterns = { "/dispatcher" })
+//@WebServlet("/ControllerServlet")
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private Map commands;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
     public ControllerServlet() {
+    	
+    	/**
+    	 * Add command here first before you write any new method
+    	 */
         super();
+        commands = new HashMap();
+        commands.put("stafflogin", new StaffLoginCommand());
+        commands.put("register", new RegisterCommand());
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see Servlet#init(ServletConfig)
+    
+	/** Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+	 * @param request servlet request
+	 * @param response servlet response
 	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+	throws ServletException, IOException{
+		String operation = request.getParameter("operation");
+		Command cmd = (Command) commands.get(request.getParameter("operation"));
+		String next = cmd.execute(request, response);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(next);
+		dispatcher.forward(request, response);
 	}
-
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
+
 	}
 
 	/**
@@ -43,7 +63,7 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		processRequest(request, response);
 	}
 
 }

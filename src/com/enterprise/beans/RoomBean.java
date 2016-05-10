@@ -24,5 +24,18 @@ public class RoomBean {
 	public RoomBean() {
 	}
 	
+	public int getHotelID() {
+		return roomID;
+	}
+	public void setHotelID(int id) {
+		roomID = id;
+	}
+	public String getRoomType() {
+		return roomType;
+	}
+	public void setRoomType(String sRoomType) {
+		roomType = sRoomType;
+	}
+	
 	
 }

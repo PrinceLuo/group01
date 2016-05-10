@@ -13,9 +13,9 @@ public class DelegatesFactory {
 
 	private HashMap delegates = new HashMap();
 	private static DelegatesFactory instance = new DelegatesFactory();
-	private static String USER_DELE = "userDelegate";
-	private static String MANAGER_DELE = "managerDelegate";
-	private static String OWNER_DELE = "ownerDelegate";
+	private String USER_DELE = "userDelegate";
+	private String MANAGER_DELE = "managerDelegate";
+	private String OWNER_DELE = "ownerDelegate";
 	
 	private DelegatesFactory(){
 		delegates.put(USER_DELE, new UserDelegateImpl());

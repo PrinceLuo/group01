@@ -3,12 +3,9 @@ package com.enterprise.jdbc;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.naming.*;
 import javax.sql.DataSource;
 import com.enterprise.exception.ServiceLocatorException;
-
 
 public class DBConnectionFactory {
 	
@@ -16,13 +13,11 @@ public class DBConnectionFactory {
 	private static DBConnectionFactory factory = null;
 	private DataSource ds = null;
 	private InitialContext ctx;
-	@SuppressWarnings("unused")
-	private Context subctx;
 	
 	private DBConnectionFactory() throws ServiceLocatorException{
 		try{
 			ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/MyDB");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Derby");
 			logger.info("Database found:"+ds.toString());
 		}catch(NamingException e){
 			logger.severe("Cannot find context, throwing exception"+e.getMessage());

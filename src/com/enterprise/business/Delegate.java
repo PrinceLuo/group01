@@ -32,7 +32,13 @@ public abstract class Delegate {
 	 * findAll
 	 */
 	
-	UserBean login(String username, String password){
+	public UserBean login(String username, String password){
 		return getService().login(username, password);
+	}
+	
+	public String register(String newuser, String newpassword, String newemail){
+		//String registerName = null;
+		
+		return getService().register(newuser, newpassword, newemail);
 	}
 }

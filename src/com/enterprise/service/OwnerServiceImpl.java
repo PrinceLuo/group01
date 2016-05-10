@@ -9,7 +9,7 @@ import com.enterprise.beans.UserBean;
  * So you need a factory and extract the OwnererDAO from it
  * Also remember to add methods that inherit from interface
  */
-public class OwnerServiceImpl implements Service {
+public class OwnerServiceImpl extends Service{
 
 	/* (non-Javadoc)
 	 * @see com.enterprise.service.Service#login(java.lang.String, java.lang.String)

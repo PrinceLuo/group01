@@ -4,9 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
+<title>Staff</title>
 </head>
 <body>
-<div style="position: absolute; top: 0; right: 0;"><a href="userlogin.jsp" class="button">Sigh-in/Sign-up</a></div>
+	<form action="dispatcher" method="post">
+Username: 
+	<input type="text" name="username" />
+Password: 
+	<input type="password" name="password" />
+	<input type="hidden" name="operation" value="stafflogin" />
+	<input type="submit" value="Login">
+</form>
 </body>
 </html>
