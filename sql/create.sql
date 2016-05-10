@@ -38,8 +38,7 @@ create table room_type(
 	total_num int not null,
 	hotel_id int not null,
 	constraint chk_price check (price >= 0),
-	constraint chk_num check (available_num >= 0),
-	hotel_id int not null,
+	constraint chk_num check (total_num >= 0),
 	primary key (id),
 	foreign key (hotel_id) references hotel(id)
 );
