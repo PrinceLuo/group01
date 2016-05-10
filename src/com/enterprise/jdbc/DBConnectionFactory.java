@@ -13,10 +13,6 @@ public class DBConnectionFactory {
 	private static DBConnectionFactory factory = null;
 	private DataSource ds = null;
 	private InitialContext ctx;
-<<<<<<< HEAD
-=======
-	private Context subctx;
->>>>>>> e511cfb679815ec157a9bae9c53bbc3ad83768c3
 	
 	private DBConnectionFactory() throws ServiceLocatorException{
 		try{
