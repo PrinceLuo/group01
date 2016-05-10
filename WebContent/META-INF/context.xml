@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context debug="1" reloadable="true" crossContext="true">
+<<<<<<< HEAD
   <Resource name="jdbc/Derby" auth="Container"
           type="javax.sql.DataSource" username="group01" password="123"
           driverClassName="org.apache.derby.jdbc.ClientDriver" 
           url="jdbc:derby://localhost:1527/Prince_Hotel"
           maxActive="8" maxIdle="4"/>
 </Context>
+=======
+  <Resource name="jdbc/myDB" auth="Container"
+          type="javax.sql.DataSource" username="TravelCoWebDBUser" password="Ab12345!"
+          driverClassName="org.apache.derby.jdbc.ClientDriver" 
+          url="jdbc:derby://localhost:1527/TravelCoWebDB"
+          maxActive="8" maxIdle="4"/>
+</Context>
+>>>>>>> e511cfb679815ec157a9bae9c53bbc3ad83768c3
