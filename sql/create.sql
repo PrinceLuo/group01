@@ -102,11 +102,7 @@ create table booking(
 create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
-<<<<<<< HEAD
-=======
 	cur_date date not null,
->>>>>>> origin/master
-	start_date date not null,
 	end_date date not null,
 	hotel_id int not null,
 	room_type_id int not null,

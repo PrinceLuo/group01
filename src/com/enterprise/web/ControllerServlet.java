@@ -31,16 +31,12 @@ public class ControllerServlet extends HttpServlet {
         commands = new HashMap();
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
-<<<<<<< HEAD
         commands.put("assign", new AllocateCommand());
         commands.put("allocate", new AllocateCommand());
         commands.put("checkout", new CheckoutCommand());
         commands.put("customerlogin", new CustomerLoginCommand());
         commands.put("profileedit", new ProfileEditCommand());
-        
-=======
         commands.put("homedisplay", new HomeDisplayCommand());
->>>>>>> origin/master
         // TODO Auto-generated constructor stub
     }
     
