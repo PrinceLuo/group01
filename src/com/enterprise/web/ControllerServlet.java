@@ -23,8 +23,7 @@ public class ControllerServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControllerServlet() {
-    	
+	public ControllerServlet() {
     	/**
     	 * Add command here first before you write any new method
     	 */
@@ -32,12 +31,16 @@ public class ControllerServlet extends HttpServlet {
         commands = new HashMap();
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
+<<<<<<< HEAD
         commands.put("assign", new AllocateCommand());
         commands.put("allocate", new AllocateCommand());
         commands.put("checkout", new CheckoutCommand());
         commands.put("customerlogin", new CustomerLoginCommand());
         commands.put("profileedit", new ProfileEditCommand());
         
+=======
+        commands.put("homedisplay", new HomeDisplayCommand());
+>>>>>>> origin/master
         // TODO Auto-generated constructor stub
     }
     
@@ -45,10 +48,14 @@ public class ControllerServlet extends HttpServlet {
 	 * @param request servlet request
 	 * @param response servlet response
 	 */
+
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException{
 		String operation = request.getParameter("operation");
-		Command cmd = (Command) commands.get(request.getParameter("operation"));
+		if(request.getParameter("operation")==null){
+			operation="homedisplay";
+		}
+		Command cmd = (Command) commands.get(operation);
 		String next = cmd.execute(request, response);
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(next);
 		dispatcher.forward(request, response);
@@ -61,7 +68,6 @@ public class ControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		processRequest(request, response);
-
 	}
 
 	/**
