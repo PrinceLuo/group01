@@ -4,6 +4,14 @@
 package com.enterprise.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.enterprise.jdbc.bookingDTO;
+import com.enterprise.jdbc.detailDTO;
+import com.enterprise.jdbc.roomDTO;
+import com.enterprise.jdbc.staffDTO;
+import com.enterprise.jdbc.DAO.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +24,18 @@ import com.enterprise.business.ManagerDelegateImpl;
 
 /**
  * @author group01
+ * Staff function
  * Deals with command Login from staff
  */
-public class StaffLoginImpl implements Command {
+public class CheckoutCommand implements Command {
 
 	/* (non-Javadoc)
 	 * @see com.enterprise.web.Command#execute(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	
-	private static ManagerDelegateImpl manaDelegate;
+	private ManagerDelegateImpl manaDelegate;
 	
-	public StaffLoginImpl(){
+	public CheckoutCommand(){
 		manaDelegate = DelegatesFactory.getInstance().getManagerDelegate();
 	}
 	
@@ -34,17 +43,20 @@ public class StaffLoginImpl implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String[] roomids = request.getParameterValues("roomids");
+		//not sure if getAttribute works with checkbox form
+		managerDAO manager=new managerDAOImpl();
 		
-		UserBean staff = manaDelegate.login(request.getParameter("username"), request.getParameter("password"));
-		if(staff == null){
-			HttpSession session = request.getSession();
-			session.setAttribute("user", staff);
-			return "/final.jsp"; // Should return a failure page
-		} else{
-			HttpSession session = request.getSession();
-			session.setAttribute("user", staff);
-			return "/final.jsp"; // Should return a success page
+		for(int i=0;i<roomids.length;i++){
+			int roomid=Integer.parseInt(roomids[i]);
+			manager.returnRoom(roomid);
+		}
+		
+		return "/staffinfo.jsp"; 
+		//how to return to manager page without relogin
 		}
 	}
+	
 
-}
+

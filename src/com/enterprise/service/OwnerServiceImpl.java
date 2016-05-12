@@ -19,7 +19,7 @@ public class OwnerServiceImpl extends Service{
 	}
 	
 	@Override
-	public UserBean login(String username, String password) {
+	public UserBean stafflogin(String username, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}

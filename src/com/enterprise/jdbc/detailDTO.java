@@ -6,7 +6,7 @@ import java.sql.Date;
 public class detailDTO {
 	private int id;
 	private int booking_id;
-	private Date current_date;
+	private String pin;
 	private Date start_date;
 	private Date end_date;
 	private int hotel_id;
@@ -18,10 +18,10 @@ public class detailDTO {
 	public detailDTO(){
 
 	}	
-	public detailDTO(int id, int booking_id, Date current, Date start_date, Date end_date, int hotel_id, int room_type_id, int extra_bed, int num_rooms, String level){
+	public detailDTO(int id, int booking_id,String pin, Date start_date, Date end_date, int hotel_id, int room_type_id, int extra_bed, int num_rooms, String level){
 		this.id = id;
 		this.booking_id = booking_id;
-		this.current_date = current;
+		this.pin=pin;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.hotel_id = hotel_id;
@@ -43,11 +43,11 @@ public class detailDTO {
 	public void setBookingid(int booking_id){
 		this.booking_id = booking_id;
 	}
-	public Date getCurrentdate(){
-		return this.current_date;
+	public String getPin(){
+		return this.pin;
 	}
-	public void setCurrentdate(Date start_date){
-		this.current_date = start_date;
+	public void setPin(String pin){
+		this.pin=pin;
 	}
 	public Date getStartdate(){
 		return this.start_date;

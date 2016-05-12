@@ -68,6 +68,12 @@ public class customerDAOImpl implements customerDAO {
 			//if(rs.isBeforeFirst()==true){
 			while (rs.next()){
 				customer = new customerDTO(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getString("email"));
+				customer.setNickname(rs.getString("nickname"));
+				customer.setFirstname(rs.getString("firstname"));
+				customer.setLastname(rs.getString("lastname"));
+				customer.setAdd(rs.getString("address"));
+				customer.setCardnum(rs.getString("card_num"));
+				customer.setCardtype(rs.getString("card_type"));
 			} 
 			stmt.close();
 			//}
@@ -87,6 +93,21 @@ public class customerDAOImpl implements customerDAO {
 	public void updateCustomer(customerDTO customer) throws DataAccessException {
 		// TODO Auto-generated method stub
 
+		try {
+			PreparedStatement stmt = conn.prepareStatement("UPDATE customer SET nickname=?,firstname=?,lastname=?,email=?,address=?,card_num=?,card_type=? WHERE username=?");
+			stmt.setString(1, customer.getNickname());
+			stmt.setString(2, customer.getFirstname());
+			stmt.setString(3, customer.getLastname());
+			stmt.setString(4, customer.getEmail());
+			stmt.setString(5, customer.getAdd());
+			stmt.setString(6, customer.getCardnum());
+			stmt.setString(7, customer.getCardtype());
+			stmt.setString(8, customer.getUsername());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)

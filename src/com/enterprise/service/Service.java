@@ -2,6 +2,7 @@
 package com.enterprise.service;
 
 import com.enterprise.beans.UserBean;
+import com.enterprise.jdbc.customerDTO;
 
 /**
  * @author group01
@@ -17,11 +18,19 @@ public abstract class Service {
 	 * @return A user if one exists with the given details
 	 * You may add and exception handler later
 	 */
-	public UserBean login(String username, String password){
+	public UserBean stafflogin(String username, String password){
 		return null;
 	}
 	
 	public String register(String newuser, String newpassword, String newemail){
+		return null;
+	}
+	
+	public customerDTO customerlogin(String username, String password){
+		return null;
+	}
+	
+	public customerDTO editProfile(customerDTO old){
 		return null;
 	}
 	/**

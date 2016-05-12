@@ -16,6 +16,7 @@ import com.enterprise.jdbc.DAO.managerDAOImpl;
 public class ManagerServiceImpl extends Service {
 
 	private managerDAOImpl managerDAO;
+	
 	/* (non-Javadoc)
 	 * @see com.enterprise.service.Service#login(java.lang.String, java.lang.String)
 	 */
@@ -25,7 +26,7 @@ public class ManagerServiceImpl extends Service {
 	}
 	
 	@Override
-	public UserBean login(String username, String password) {
+	public UserBean stafflogin(String username, String password) {
 		// TODO Auto-generated method stub
 		
 		UserBean staff = new UserBean();

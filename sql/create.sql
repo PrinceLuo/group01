@@ -1,7 +1,6 @@
 drop table detail;
 drop table discount;
 drop table booking;
-drop table credit_card;
 drop table room;
 drop table room_type;
 drop table hotel;
@@ -15,8 +14,10 @@ create table staff(
 	username varchar(20) not null unique,
 	password varchar(20) not null,
 	staff_type varchar(10) not null,
+	hotel_id int
 	constraint chk_staff_type check (staff_type = 'owner' or staff_type = 'manager'),
 	primary key (id)
+	foreign key (hotel_id) references hotel(id)
 );
 
 --room information
@@ -38,8 +39,7 @@ create table room_type(
 	total_num int not null,
 	hotel_id int not null,
 	constraint chk_price check (price >= 0),
-	constraint chk_num check (available_num >= 0),
-	hotel_id int not null,
+	constraint chk_num check (total_num >= 0),
 	primary key (id),
 	foreign key (hotel_id) references hotel(id)
 );
@@ -66,18 +66,13 @@ create table customer(
 	lastname varchar(20),
 	email varchar(50) not null unique,
 	address varchar(100),
+	card_num varchar(10),
+	card_type varchar(20),
+	constraint chk_card_type check (card_type = 'VISA' or card_type = 'MasterCard' or card_type = 'America Express' or card_type = 'JCB' or card_type = 'UnionPay'),
 	primary key (id)
 );
 
-create table credit_card(
-	id int not null generated always as identity,
-	card_type varchar(20) not null,
-	constraint chk_card_type check (card_type = 'VISA' or card_type = 'MasterCard' or card_type = 'America Express' or card_type = 'JCB' or card_type = 'UnionPay'),
-	card_num varchar(10) not null,
-	customer_id int not null,
-	primary key (id),
-	foreign key (customer_id) references customer(id)
-);
+
 --discount information
 
 create table discount(
@@ -87,7 +82,8 @@ create table discount(
 	current_date date not null,
 	start_date date not null,
 	end_date date not null,
-	rate decimal(3,2) not null,
+	rate int not null,
+	constraint chk_rate check (rate > 0 and rate < 100),
 	primary key (id),
 	foreign key (room_type_id) references room_type(id),
 	foreign key (hotel_id) references hotel(id)
@@ -106,7 +102,6 @@ create table booking(
 create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
-	current_date date not null,
 	start_date date not null,
 	end_date date not null,
 	hotel_id int not null,
@@ -115,9 +110,11 @@ create table detail(
 	constraint chk_extra_bed check (extra_bed = 0 or extra_bed = 1),
 	num_rooms int not null,
 	level varchar(10) not null,
-	constraint chk_l check ( level = 'pend' or level = 'confirm'),
+	pin varchar(10),
+	constraint chk_l check ( level = 'pend' or level = 'confirm' or level = 'assigned'),
 	primary key (id),
 	foreign key (booking_id) references booking(id),
 	foreign key (hotel_id) references hotel(id),
 	foreign key (room_type_id) references room_type(id)
+	foreign key (pin) references booking(pin)
 );

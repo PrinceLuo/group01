@@ -15,7 +15,7 @@ import javax.servlet.http.*;
 /**
  * Servlet implementation class ControlServlet
  */
-//@WebServlet("/ControllerServlet")
+//@WebServlet("/dispatcher")
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Map commands;
@@ -32,6 +32,12 @@ public class ControllerServlet extends HttpServlet {
         commands = new HashMap();
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
+        commands.put("assign", new AllocateCommand());
+        commands.put("allocate", new AllocateCommand());
+        commands.put("checkout", new CheckoutCommand());
+        commands.put("customerlogin", new CustomerLoginCommand());
+        commands.put("profileedit", new ProfileEditCommand());
+        
         // TODO Auto-generated constructor stub
     }
     
