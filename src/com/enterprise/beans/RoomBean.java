@@ -14,7 +14,7 @@ public class RoomBean {
 	 * be the same as the attributes from
 	 * table rooms
 	 */
-	private int roomID;
+	private int HotelID;
 	private String roomType;
 	// need more later
 	
@@ -25,10 +25,10 @@ public class RoomBean {
 	}
 	
 	public int getHotelID() {
-		return roomID;
+		return HotelID;
 	}
 	public void setHotelID(int id) {
-		roomID = id;
+		HotelID = id;
 	}
 	public String getRoomType() {
 		return roomType;

@@ -12,11 +12,11 @@ public class bookingDTO {
 		
 	}
 	
-	public bookingDTO(int id, int customer_id, String pin){
+	public bookingDTO(int id, int customer_id, String pin,List<detailDTO> d){
 		this.id = id;
 		this.customer_id = customer_id;
 		this.pin = pin;
-
+		this.detaillist=d;
 	}
 	
 	public int getID(){

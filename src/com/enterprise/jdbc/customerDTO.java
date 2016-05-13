@@ -11,7 +11,8 @@ public class customerDTO {
 	private String lastname;
 	private String email;
 	private String address;
-	private List<creditcardDTO> creditcardlist;
+	private String cardnum;
+	private String cardtype;
 	private List<bookingDTO> bookinglist;
 	
 	public customerDTO(){
@@ -82,18 +83,49 @@ public class customerDTO {
 		return this.address;
 	}
 	
-	public void setCreditcardlist(List<creditcardDTO> creditcardlist){
-		this.creditcardlist = creditcardlist;
-	}
 	
-	public List<creditcardDTO> getCreditcardlist(){
-		return this.creditcardlist;
-	}
-	
+//	public void setCreditcardlist(List<creditcardDTO> creditcardlist){
+//		this.creditcardlist = creditcardlist;
+//	}
+//	
+//	public List<creditcardDTO> getCreditcardlist(){
+//		return this.creditcardlist;
+//	}
+
 	public void setBookinglist(List<bookingDTO> bookinglist){
 		this.bookinglist = bookinglist;
 	}
 	public List<bookingDTO> getBookinglist(){
 		return this.bookinglist;
 	}
+
+	/**
+	 * @return the cardnum
+	 */
+	public String getCardnum() {
+		return cardnum;
+	}
+
+	/**
+	 * @param cardnum the cardnum to set
+	 */
+	public void setCardnum(String cardnum) {
+		this.cardnum = cardnum;
+	}
+
+	/**
+	 * @return the cardtype
+	 */
+	public String getCardtype() {
+		return cardtype;
+	}
+
+	/**
+	 * @param cardtype the cardtype to set
+	 */
+	public void setCardtype(String cardtype) {
+		this.cardtype = cardtype;
+	}
+
+	
 }

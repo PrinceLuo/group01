@@ -65,3 +65,5 @@
  insert into room_type values (default, 'Executive', 300, 100, 6);
  insert into room_type values (default, 'Suite', 400, 100, 6);
  insert into room values (default, 26, 6, 101, 'available');
+ 
+ insert into CUSTOMER values (default, 'jpark', 'jpark','','','','johnpark@live.com.au','');

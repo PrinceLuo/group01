@@ -28,10 +28,16 @@ public class UserServiceImpl extends Service {
 	}
 	
 	@Override
-	public UserBean login(String username, String password) {
+	public customerDTO customerlogin(String username, String password) {
 		// TODO Auto-generated method stub
 		// Shall call the tb_userDAO
-		return null;
+		customerDTO customer = null;
+		customer = customerDAO.find(username);
+		if(!customer.getPassword().equals(password)){
+			customer = null;
+		}
+		
+		return customer;
 	}
 	
 
@@ -97,6 +103,13 @@ public class UserServiceImpl extends Service {
 			registerInfo = exist.getUsername();
 		}
 		return registerInfo;
+	}
+	
+	public customerDTO editProfile(customerDTO old){
+		
+		customerDAO.updateCustomer(old);
+		customerDTO change = customerDAO.find(old.getUsername());
+		return change;
 	}
 	/**
 	 * Methods that inherit from the interface Service
