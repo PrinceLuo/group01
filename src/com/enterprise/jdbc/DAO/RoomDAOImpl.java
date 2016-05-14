@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.enterprise.beans.RoomBean;
@@ -105,17 +108,29 @@ public class RoomDAOImpl implements RoomDAO {
 		   try 
 		   {
 		     PreparedStatement stmt = conn.prepareStatement(
-		       "select * from room_type where room_type=? and hotel_id=?", ResultSet.TYPE_SCROLL_SENSITIVE,
+		       "SELECT r.hotel_id, r.room_type, r.price, h.id, h.name, h.location FROM room_type AS r INNER JOIN hotel AS h ON r.hotel_id = h.id WHERE r.room_type=? and h.id=?", ResultSet.TYPE_SCROLL_SENSITIVE,
 	            ResultSet.CONCUR_UPDATABLE);
 		     stmt.setString(1, RoomType);
 		     stmt.setInt(2, HotelID);
 		     ResultSet rs = stmt.executeQuery();
-		  // Fetch each row from the result set
+		     // Fetch each row from the result set
 		     while (rs.next()) {
-		       int i = rs.getInt("hotel_id");
-		       String str = rs.getString("room_type");
-		       rb.setHotelID (i);
-		       rb.setRoomType(str);
+		       int iHotelID = rs.getInt("hotel_id");
+		       String sRoomType = rs.getString("room_type");
+		       rb.setHotelID (iHotelID);
+		       rb.setRoomType(sRoomType);
+		       
+		       DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+		       DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+		       //symbols.setCurrencySymbol(""); // Don't use null.
+		       formatter.setDecimalFormatSymbols(symbols);
+		       rb.setPrice(formatter.format(rs.getDouble("price")));
+
+		       rb.setHotelName(rs.getString("name"));
+		       rb.setCity(rs.getString("location"));
+		       
+		       String sPath = "images/" + sRoomType + ".jpg";
+		       rb.setImagePath(sPath);
 		     }
 		   } 
 		   catch (Exception e) {

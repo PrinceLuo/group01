@@ -1,15 +1,11 @@
 package com.enterprise.web;
 
-
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 /**
@@ -18,7 +14,7 @@ import javax.servlet.http.*;
 //@WebServlet("/dispatcher")
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Map commands;
+    private Map<String, Command> commands;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -28,7 +24,7 @@ public class ControllerServlet extends HttpServlet {
     	 * Add command here first before you write any new method
     	 */
         super();
-        commands = new HashMap();
+        commands = new HashMap<String, Command>();
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("assign", new AllocateCommand());
@@ -73,5 +69,4 @@ public class ControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		processRequest(request, response);
 	}
-
 }

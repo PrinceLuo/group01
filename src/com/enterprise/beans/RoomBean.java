@@ -1,6 +1,8 @@
 
 package com.enterprise.beans;
 
+import java.util.Currency;
+
 /**
  * @author group01
  * Capture the information of a room
@@ -14,8 +16,12 @@ public class RoomBean {
 	 * be the same as the attributes from
 	 * table rooms
 	 */
-	private int HotelID;
-	private String roomType;
+	private int iHotelID;
+	private String sRoomType;
+	private String sPrice;
+	private String sHotelName;
+	private String sCity;
+	private String sImgPath;
 	// need more later
 	
 	/**
@@ -25,17 +31,39 @@ public class RoomBean {
 	}
 	
 	public int getHotelID() {
-		return HotelID;
+		return iHotelID;
 	}
-	public void setHotelID(int id) {
-		HotelID = id;
+	public void setHotelID(int iValue) {
+		iHotelID = iValue;
 	}
 	public String getRoomType() {
-		return roomType;
+		return sRoomType;
 	}
-	public void setRoomType(String sRoomType) {
-		roomType = sRoomType;
+	public void setRoomType(String sValue) {
+		sRoomType = sValue;
 	}
-	
-	
+	public String getHotelName() {
+		return sHotelName;
+	}
+	public void setHotelName(String sValue) {
+		sHotelName = sValue;
+	}
+	public String getCity() {
+		return sCity;
+	}
+	public void setCity(String sValue) {
+		sCity = sValue;
+	}
+	public String getPrice() {
+		return sPrice;
+	}
+	public void setPrice(String sValue) {
+		sPrice = sValue;
+	}
+	public String getImagePath() {
+		return sImgPath;
+	}
+	public void setImagePath(String sValue) {
+		sImgPath = sValue;
+	}
 }
