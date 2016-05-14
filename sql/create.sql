@@ -82,7 +82,7 @@ create table discount(
 	cur_date date not null,
 	start_date date not null,
 	end_date date not null,
-	rate int not null,
+	rate decimal not null,
 	constraint chk_rate check (rate > 0 and rate < 100),
 	primary key (id),
 	foreign key (room_type_id) references room_type(id),

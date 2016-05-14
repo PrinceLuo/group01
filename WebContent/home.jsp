@@ -23,10 +23,10 @@ String sWhat2Search = "";
 <table><tr>
 	<c:forEach items='${rooms}' var='room'>
 <% iCount++; %>
-<td><table width="575" border=1>
-	    <tr><td rowspan='3' width='275'><img src='${room.getImagePath()}' width='275' height='183'/></td><th width='150'>Room Type</th><td align='center' width='150'>${room.getRoomType()}</td></tr>
-	    <tr><TH width='150'>City</TH><td align='center' width='150'>${room.getCity()}</td></tr>
-	    <tr><TH width='150'>Price</TH><td align='center' width='150'>${room.getPrice()}</td></tr>
+<td><table width="298" border=1>
+	    <tr><td rowspan='3' width='138' align="center"><img src='${room.getImagePath()}' width='138' height='92'/></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${room.getRoomType()}</td></tr>
+	    <tr><TH>City</TH><td align='center'>${room.getCity()}</td></tr>
+	    <tr><TH>Price</TH><td align='center'>${room.getPrice()}</td></tr>
 </table></td>
 <% if (iCount == 3) { %>
 </tr><tr>

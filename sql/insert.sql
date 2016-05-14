@@ -67,3 +67,13 @@
  insert into room values (default, 26, 6, 101, 'available');
  
  insert into CUSTOMER values (default, 'jpark', 'jpark','','','','johnpark@live.com.au','');
+ 
+
+ -- JP added for development of public view
+ insert into discount values (default, 1, 1,'01-May-2016','10-May-2016','24-May-2016', 0.5);
+ 
+ 
+ 
+ 
+ 
+ 
