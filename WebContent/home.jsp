@@ -18,24 +18,43 @@ String sWhat2Search = "";
 //	sWhat2Search = request.getParameter("searchtext");
 %>
 <!--jsp:useBean id="rooms" class="com.enterprise.beans.RoomBean" scope="session" /-->
+
+
 <% int iCount = 0; %>
 <h1>Rooms</h1><br />
 <table><tr>
 	<c:forEach items='${rooms}' var='room'>
-<% iCount++; %>
-<td><table width="298" border=1>
-	    <tr><td rowspan='3' width='138' align="center"><img src='${room.getImagePath()}' width='138' height='92'/></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${room.getRoomType()}</td></tr>
-	    <tr><TH>City</TH><td align='center'>${room.getCity()}</td></tr>
-	    <tr><TH>Price</TH><td align='center'>${room.getPrice()}</td></tr>
-</table></td>
-<% if (iCount == 3) { %>
-</tr><tr>
-<% }
-if (iCount == 6) { %>
-</tr></table>
-<% } %>
+		<% iCount++; %>
+		<td><table width="298" border=1>
+			    <tr><td rowspan='3' width='138' align="center"><img src='${room.getImagePath()}' width='138' height='92'/></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${room.getRoomType()}</td></tr>
+			    <tr><TH>City</TH><td align='center'>${room.getCity()}</td></tr>
+			    <tr><TH>Price</TH><td align='center'>${room.getPrice()}</td></tr>
+		</table></td>
+		<% if ((iCount % 3)==0) { %>
+		</tr><tr>
+		<% } %>
 	</c:forEach>
-<h1>All rooms in one hotel</h1><br />
+</tr></table>
+
+
+<% iCount = 0; %>
+<h1>Special Deals</h1><br />
+<table><tr>
+	<c:forEach items='${specials}' var='special'>
+		<% iCount++; %>
+		<td><table width="298" border=1>
+			    <tr><td rowspan='3' width='138' align="center"><img src='${special.imagepath}' width='138' height='92'/></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${special.room_type}</td></tr>
+			    <tr><TH>City</TH><td align='center'>${special.city}</td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle"><del>${special.price}</del><br /><red><b>${special.specialprice}</b></red><br /><red><b>${special.rate}% discount!</b></red></td></tr>
+		</table></td>
+		<% if ((iCount % 3)==0) { %>
+		</tr><tr>
+		<% } %>
+	</c:forEach>
+</tr></table>
+
+
+<!-- h1>All Room types in a hotel</h1><br />
 <table width="100%" border=1>
 <tr>
     <th>Room Type</th><TH>Price</TH><TH>Total No</TH><TH>Hotel ID</TH>
@@ -50,7 +69,8 @@ if (iCount == 6) { %>
 		</tr>
 	</c:forEach>
 
-</TABLE>
+</TABLE-->
+
 
 <!-- form action='dispatcher' method='post'>
 	<input type="text" value="<%=sWhat2Search %>" name='searchtext'>

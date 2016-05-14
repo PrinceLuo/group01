@@ -46,10 +46,10 @@ public class HomeDisplayCommand implements Command{
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RoomDAOImpl[] roomDAO = new RoomDAOImpl[6];
 		HttpSession session = request.getSession();
 		Random randomGenerator = new Random();
 
+		RoomDAOImpl[] roomDAO = new RoomDAOImpl[6];
 		RoomBean[] rb = new RoomBean[6];
 		for  (int i = 0; i < 6; i++) {
 			// show a random room type of hotel 1
@@ -61,21 +61,21 @@ public class HomeDisplayCommand implements Command{
 			rb[i] = roomDAO[i].getRoom();
 		}
 		session.setAttribute("rooms", rb);
+
+		// special deals
+		RoomDAOImpl roomDAO2 = new RoomDAOImpl();
+		ArrayList<Map<String, String>> l = roomDAO2.getDiscountedRooms4Today();
+		session.setAttribute("specials", l);
 		
-		/*RoomBean rb = new RoomBean();
-			roomDAO.setHotelID(1);		
-			roomDAO.setRoomType("Queen");
-			
-			rb = roomDAO.getRoom();
-			session.setAttribute("oneroom", rb);*/
 		
 
-		
 		// display all room types in a hotel
-		RoomDAOImpl roomDAO2 = new RoomDAOImpl();
+		/*RoomDAOImpl roomDAO2 = new RoomDAOImpl();
 		roomDAO2.setHotelID(1);
 		ArrayList<Map<String, String>> l = roomDAO2.findAllByHotel();
-		session.setAttribute("roomlist", l);
+		session.setAttribute("roomlist", l);*/
+		
+		
 		
 		return "/home.jsp";
 	}

@@ -152,4 +152,77 @@ public class RoomDAOImpl implements RoomDAO {
 		   return rb;
 	}
 
+	/**
+	 * @todo Complete this method
+	 * @see com.enterprise.jdbc.DAO.RoomDAO#getRoom(string, int)
+	 */
+	public ArrayList<Map<String, String>> getDiscountedRooms4Today() throws DataAccessException {
+	    ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
+	    try 
+	    {
+		     PreparedStatement stmt = conn.prepareStatement(
+		       "SELECT r.hotel_id, r.room_type, r.price, h.name, h.location, d.start_date, d.end_date, d.rate FROM discount as d "
+		     + "INNER JOIN room_type as r ON d.room_type_id = r.id INNER JOIN hotel as h ON r.hotel_id = h.id "
+		     + "WHERE d.start_date <= CURRENT_DATE and d.end_date >= CURRENT_DATE", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		     ResultSet rs = stmt.executeQuery();
+		     rs.beforeFirst();
+		     // Fetch each row from the result set
+		     while (rs.next()) {
+		    	  Map<String, String> rm = new HashMap<String, String>();
+		    	  rm.put("room_type", rs.getString("room_type"));
+		    	  
+			      DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+			      DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
+			      //symbols.setCurrencySymbol(""); // Don't use null.
+			      formatter.setDecimalFormatSymbols(symbols); 
+		    	  rm.put("price", formatter.format(rs.getDouble("price")));
+		    	  
+		    	  rm.put("name", rs.getString("name"));
+		    	  rm.put("city", rs.getString("location"));  
+			      
+		    	  rm.put("rate", String.valueOf(rs.getString("rate")));
+		    	  
+		    	  int iRate = rs.getInt("rate");
+			      double dRate = (double)iRate/100.0;
+		    	  rm.put("specialprice", formatter.format(rs.getDouble("price")*(1-dRate)));
+
+		    	  String sPath = "images/" + rs.getString("room_type") + ".jpg";
+			      rm.put("imagepath", sPath);
+		    	  list.add(rm);
+		     }
+	    } 
+	    catch (Exception e) {
+		   //throw new Exception(e.getMessage());
+		   System.out.println(e.getMessage());
+	    } 
+	    finally {
+	      if (conn != null) 
+	      {
+	         try {
+	           conn.close();
+	         } 
+	         catch (SQLException e1) 
+	         {
+	           e1.printStackTrace();
+	         }
+	      }
+	   }
+	   return list;
+	}
 }
+
+/*
+ * 		     
+		     int iSize = 0;  
+		     if (rs != null)   
+		     {  
+		    	 rs.beforeFirst();  
+		    	 rs.last();  
+		    	 iSize = rs.getRow();
+		     }
+		     if (iSize == 0)
+		    	 return rb;
+		     
+			 rb = new RoomBean[iSize];
+	
+*/

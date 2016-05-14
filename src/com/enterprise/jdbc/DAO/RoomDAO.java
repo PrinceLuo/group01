@@ -16,8 +16,11 @@ public interface RoomDAO {
 	 * to the database
 	 */
 	ArrayList<Map<String, String>> findAllByHotel() throws DataAccessException;
+	
 	void setRoomType(String sRoomType) throws DataAccessException;
+	
 	void setHotelID(int iHotelID) throws DataAccessException;
+	
 	RoomBean getRoom() throws DataAccessException;
 
 }

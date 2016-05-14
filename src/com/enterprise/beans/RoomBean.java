@@ -22,6 +22,7 @@ public class RoomBean {
 	private String sHotelName;
 	private String sCity;
 	private String sImgPath;
+	private double dDiscountRate;
 	// need more later
 	
 	/**
@@ -66,4 +67,11 @@ public class RoomBean {
 	public void setImagePath(String sValue) {
 		sImgPath = sValue;
 	}
+	public double getDiscountRate() {
+		return iHotelID;
+	}
+	public void setDiscountRate(double dValue) {
+		dDiscountRate = dValue;
+	}
+
 }
