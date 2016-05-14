@@ -6,6 +6,7 @@ drop table room_type;
 drop table hotel;
 drop table staff;
 drop table customer;
+--drop table credit_card;
 
 --staff information
 
@@ -14,11 +15,12 @@ create table staff(
 	username varchar(20) not null unique,
 	password varchar(20) not null,
 	staff_type varchar(10) not null,
-	hotel_id int
+	hotel_id int not null,
 	constraint chk_staff_type check (staff_type = 'owner' or staff_type = 'manager'),
 	primary key (id)
-	foreign key (hotel_id) references hotel(id)
+	--foreign key (hotel_id) references hotel(id)
 );
+
 
 --room information
 create table hotel (
@@ -72,7 +74,6 @@ create table customer(
 	primary key (id)
 );
 
-
 --discount information
 
 create table discount(
@@ -82,7 +83,7 @@ create table discount(
 	cur_date date not null,
 	start_date date not null,
 	end_date date not null,
-	rate decimal not null,
+	rate int not null,
 	constraint chk_rate check (rate > 0 and rate < 100),
 	primary key (id),
 	foreign key (room_type_id) references room_type(id),

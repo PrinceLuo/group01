@@ -1,10 +1,10 @@
- insert into staff values(default, 'admin', 'admin', 'owner');
- insert into staff values (default, 'Lucy', 'Meriton', 'manager');
- insert into staff values (default, 'Lily', 'Mecure', 'manager');
- insert into staff values (default, 'John', 'Arena', 'manager');
- insert into staff values (default, 'Mark', 'Mayfair', 'manager');
- insert into staff values (default, 'Even', 'Somerset', 'manager');
- insert into staff values (default, 'Kate', 'Baileys', 'manager');
+ insert into staff values(default, 'admin', 'admin', 'owner', 0);
+ insert into staff values (default, 'Lucy', 'Meriton', 'manager', 1);
+ insert into staff values (default, 'Lily', 'Mecure', 'manager', 2);
+ insert into staff values (default, 'John', 'Arena', 'manager', 3);
+ insert into staff values (default, 'Mark', 'Mayfair', 'manager', 4);
+ insert into staff values (default, 'Even', 'Somerset', 'manager', 5);
+ insert into staff values (default, 'Kate', 'Baileys', 'manager', 6);
  
  insert into hotel values (default, 'Meriton', 'Sydney',2 );
  insert into hotel values (default, 'Mecure', 'Melbourne',3);
@@ -65,12 +65,12 @@
  insert into room_type values (default, 'Executive', 300, 100, 6);
  insert into room_type values (default, 'Suite', 400, 100, 6);
  insert into room values (default, 26, 6, 101, 'available');
- 
- insert into CUSTOMER values (default, 'jpark', 'jpark','','','','johnpark@live.com.au','');
- 
 
  -- JP added for development of public view
- insert into discount values (default, 1, 1,'01-May-2016','10-May-2016','24-May-2016', 0.5);
+ insert into discount values (default, 1, 1,'05/01/2016','05/10/2016','05/24/2016', 50);
+insert into discount values (default, 1, 1,'05/01/2016','05/10/2016','05/24/2016', 10);
+insert into discount values (default, 1, 1,'05/01/2016','05/10/2016','05/24/2016', 20);
+insert into discount values (default, 1, 1,'05/01/2016','05/10/2016','05/24/2016', 30);
  
  
  
