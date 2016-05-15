@@ -80,9 +80,9 @@ create table discount(
 	id int not null generated always as identity,
 	room_type_id int not null,
 	hotel_id int not null,
-	cur_date date not null,
-	start_date date not null,
-	end_date date not null,
+	cur_date varchar(10),
+	start_date varchar(10) not null,
+	end_date varchar(10) not null,
 	rate int not null,
 	constraint chk_rate check (rate > 0 and rate < 100),
 	primary key (id),
@@ -103,8 +103,9 @@ create table booking(
 create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
-	cur_date date not null,
-	end_date date not null,
+	cur_date varchar(10) not null,
+	start_date varchar(10) not null,
+	end_date varchar(10) not null,
 	hotel_id int not null,
 	room_type_id int not null,
 	extra_bed int not null,
@@ -120,11 +121,12 @@ create table detail(
 	foreign key (pin) references booking(pin)
 );
 
-create table peek(
+create table peak(
 	id int not null generated always as identitiy,
-	name varchar(10),
-	start_date date not null,
-	end_date date not null,
+	name varchar(10) not null,
+	cur_date varchar(10) not null,
+	start_date varchar(10) not null,
+	end_date varchar(10) not null,
 	rate int not null,
 	constraint chk_rate check(rate > 0 ),
 	primary key (id)

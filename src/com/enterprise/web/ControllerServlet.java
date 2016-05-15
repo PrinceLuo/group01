@@ -37,6 +37,10 @@ public class ControllerServlet extends HttpServlet {
         commands.put("customerlogin", new CustomerLoginCommand());
         commands.put("profileedit", new ProfileEditCommand());
         commands.put("homedisplay", new HomeDisplayCommand());
+        commands.put("ownerlogin", new OwnerLoginCommand());
+        commands.put("setmaintenance", new SetMaintanceCommand());
+       
+        
         // TODO Auto-generated constructor stub
     }
     

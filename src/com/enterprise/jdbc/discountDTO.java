@@ -1,22 +1,26 @@
 package com.enterprise.jdbc;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+
 
 
 public class discountDTO {
 	private int id;
 	private int room_type_id;
 	private int hotel_id;
-	private Date current_date;
-	private Date start_date;
-	private Date end_date;
-	private BigDecimal rate;
+	private String current_date;
+	private String start_date;
+	private String end_date;
+	private int rate;
+	private String location;
+	private String name;
+	private String roomtype;
 	
 	public discountDTO(){
 		
 	}
-	public discountDTO(int id, int room_type_id, int hotel_id, Date current, Date start, Date end, BigDecimal rate){
+	public discountDTO(int id, int room_type_id, int hotel_id, String current, String start, String end, int rate){
 		this.id = id;
 		this.room_type_id = room_type_id;
 		this.hotel_id = hotel_id;
@@ -45,28 +49,46 @@ public class discountDTO {
 	public void setHotelid(int hotel_id){
 		this.hotel_id = hotel_id;
 	}
-	public Date getCurrentdate(){
+	public String getCurrentdate(){
 		return this.current_date;
 	}
-	public void setCurrentdate(Date start_date){
+	public void setCurrentdate(String start_date){
 		this.current_date = start_date;
 	}
-	public Date getStartdate(){
+	public String getStartdate(){
 		return this.start_date;
 	}
-	public void setStartdate(Date start_date){
+	public void setStartdate(String start_date){
 		this.start_date = start_date;
 	}
-	public Date getEnddate(){
+	public String getEnddate(){
 		return this.end_date;
 	}
-	public void setEnddate(Date end_date){
+	public void setEnddate(String end_date){
 		this.end_date = end_date;
 	}
-	public BigDecimal getRate(){
+	public int getRate(){
 		return this.rate;
 	}
-	public void setRate(BigDecimal rate){
+	public void setRate(int rate){
 		this.rate = rate;
+	}
+	public String getLocation(){
+		return this.location;
+	}
+	public void setLocation(String l){
+		this.location = l;
+	}
+	public String getName(){
+		return this.name;
+	}
+	public void setName(String n){
+		this.name = n;
+	}
+	public String getType(){
+		return this.roomtype;
+	}
+	public void setType(String t){
+		this.roomtype = t;
 	}
 }

@@ -8,7 +8,6 @@ public class hotelDTO {
 	private String location;
 	private int manager_id;
 	private List<roomtypeDTO> roomtype;
-	private List<roomDTO> rooms;
 	private int occ;
 	private int ava;
 	public hotelDTO(){
@@ -50,12 +49,6 @@ public class hotelDTO {
 	}
 	public void setRoomtypelist(List<roomtypeDTO> roomtype){
 		this.roomtype = roomtype;
-	}
-	public List<roomDTO> getRoomlist(){
-		return this.rooms;
-	}
-	public void setRoomlist(List<roomDTO> room){
-		this.rooms = room;
 	}
 	public int getOcc(){
 		return this.occ;

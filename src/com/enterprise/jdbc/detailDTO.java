@@ -7,8 +7,9 @@ public class detailDTO {
 	private int id;
 	private int booking_id;
 	private String pin;
-	private Date start_date;
-	private Date end_date;
+	private String cur_date;
+	private String start_date;
+	private String end_date;
 	private int hotel_id;
 	private int room_type_id;
 	private int extra_bed;
@@ -18,7 +19,7 @@ public class detailDTO {
 	public detailDTO(){
 
 	}	
-	public detailDTO(int id, int booking_id,String pin, Date start_date, Date end_date, int hotel_id, int room_type_id, int extra_bed, int num_rooms, String level){
+	public detailDTO(int id, int booking_id,String pin, String start_date, String end_date, int hotel_id, int room_type_id, int extra_bed, int num_rooms, String level){
 		this.id = id;
 		this.booking_id = booking_id;
 		this.pin=pin;
@@ -49,16 +50,22 @@ public class detailDTO {
 	public void setPin(String pin){
 		this.pin=pin;
 	}
-	public Date getStartdate(){
+	public String getCurdate(){
+		return this.cur_date;
+	}
+	public void setCurdate(String cur_date){
+		this.cur_date = cur_date;
+	}
+	public String getStartdate(){
 		return this.start_date;
 	}
-	public void setStartdate(Date start_date){
+	public void setStartdate(String start_date){
 		this.start_date = start_date;
 	}
-	public Date getEnddate(){
+	public String getEnddate(){
 		return this.end_date;
 	}
-	public void setEnddate(Date end_date){
+	public void setEnddate(String end_date){
 		this.end_date = end_date;
 	}
 	public int getHotelid(){
