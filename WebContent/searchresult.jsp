@@ -10,13 +10,8 @@
 <title>Welcome</title>
 </head>
 <body>
-Welcome to Program Hotel!<br /><br />
+<h1>Welcome to Program Hotel!</h1><br />
 
-<%
-String sWhat2Search = "";
-//if (request.getParameter("searchtext")!=null)
-//	sWhat2Search = request.getParameter("searchtext");
-%>
 <!--jsp:useBean id="rooms" class="com.enterprise.beans.RoomBean" scope="session" /-->
 
 
@@ -53,23 +48,24 @@ String sWhat2Search = "";
 	</c:forEach>
 </tr></table>
 
-
-<!-- h1>All Room types in a hotel</h1><br />
-<table width="100%" border=1>
-<tr>
-    <th>Room Type</th><TH>Price</TH><TH>Total No</TH><TH>Hotel ID</TH>
-</tr>
-</tr>
-	<c:forEach items='${roomlist}' var='room'>
-		<tr>
-			<td>${room.room_type}</td>
-			<td>${room.price}</td>
-			<td>${room.total_num}</td>
-			<td>${room.hotel_id}</td>
-		</tr>
+<% iCount = 0; %>
+<h1>Search Result</h1><br />
+<table><tr>
+	<c:forEach items='${yourrooms}' var='yourroom'>
+		<% iCount++; %>
+		<td><table width="298" border=1>
+			    <tr><td rowspan='3' width='138' align="center"><img src='${yourroom.getImagePath()}' width='138' height='92' style="border-style: none" /></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${yourroom.getRoomType()}</td></tr>
+			    <tr><TH>City</TH><td align='center'>${yourroom.getCity()}</td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle">${yourroom.getPrice()}</td></tr>
+		</table></td>
+		<% if ((iCount % 3)==0) { %>
+		</tr><tr>
+		<% } %>
 	</c:forEach>
+</tr></table>
 
-</TABLE-->
+
+
 <%
 String sCheckIn="";
 String sCheckOut="";
@@ -111,8 +107,6 @@ if (sValue != null)
     <input type='submit' value='Search' name='search'></td></tr>
 </table>
 </form>
-
-
 
 <div style="position: absolute; top: 0; right: 0;"><a href="userlogin.jsp" class="button">Sigh-in/Sign-up</a></div>
 </body>

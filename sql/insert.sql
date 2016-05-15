@@ -21,6 +21,8 @@
  insert into room_type values (default, 'Suite', 400, 100, 1);
  
  insert into room values (default, 1, 1, 101,'available');
+ insert into room values (default, 2, 1, 111,'occupied');
+ insert into room values (default, 3, 1, 121,'maintenance');
  
  
  -- Mecure hotel
@@ -65,10 +67,3 @@
  insert into room_type values (default, 'Executive', 300, 100, 6);
  insert into room_type values (default, 'Suite', 400, 100, 6);
  insert into room values (default, 26, 6, 101, 'available');
-
- 
- 
- 
- 
- 
- 

@@ -68,7 +68,7 @@ public class RoomBean {
 		sImgPath = sValue;
 	}
 	public double getDiscountRate() {
-		return iHotelID;
+		return dDiscountRate;
 	}
 	public void setDiscountRate(double dValue) {
 		dDiscountRate = dValue;

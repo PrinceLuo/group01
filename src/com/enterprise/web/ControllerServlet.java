@@ -25,6 +25,7 @@ public class ControllerServlet extends HttpServlet {
     	 */
         super();
         commands = new HashMap<String, Command>();
+        commands.put("searchrooms", new SearchRoomsCommand());
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("assign", new AllocateCommand());

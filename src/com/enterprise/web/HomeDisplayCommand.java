@@ -49,22 +49,21 @@ public class HomeDisplayCommand implements Command{
 		HttpSession session = request.getSession();
 		Random randomGenerator = new Random();
 
-		RoomDAOImpl[] roomDAO = new RoomDAOImpl[6];
+		RoomDAOImpl roomDAO = new RoomDAOImpl();
 		RoomBean[] rb = new RoomBean[6];
 		for  (int i = 0; i < 6; i++) {
 			// show a random room type of hotel 1
-			roomDAO[i] = new RoomDAOImpl();
-			roomDAO[i].setHotelID(i+1);		
+			roomDAO.setHotelID(i+1);
 			int randomInt = randomGenerator.nextInt(5)+1;
-			roomDAO[i].setRoomType(Int2RoomType(randomInt));
+			roomDAO.setRoomType(Int2RoomType(randomInt));
 			
-			rb[i] = roomDAO[i].getRoom();
+			rb[i] = roomDAO.getRoom();
 		}
 		session.setAttribute("rooms", rb);
 
 		// special deals
-		RoomDAOImpl roomDAO2 = new RoomDAOImpl();
-		ArrayList<Map<String, String>> l = roomDAO2.getDiscountedRooms4Today();
+		//RoomDAOImpl roomDAO2 = new RoomDAOImpl();
+		ArrayList<Map<String, String>> l = roomDAO.getDiscountedRooms4Today();
 		session.setAttribute("specials", l);
 		
 		
