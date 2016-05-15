@@ -46,7 +46,7 @@ public class UserServiceImpl extends Service {
 		customerDTO exist = customerDAO.find(newuser);
 		if(exist!=null){
 			// exist
-			registerInfo = "User Existed!";
+			registerInfo = "The user already exists!"; //  User Existed! => The user already exists!
 			return registerInfo;
 		}
 		
