@@ -104,6 +104,7 @@ create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
 	cur_date date not null,
+	start_date date not null,
 	end_date date not null,
 	hotel_id int not null,
 	room_type_id int not null,
