@@ -21,7 +21,6 @@ create table staff(
 	--foreign key (hotel_id) references hotel(id)
 );
 
-
 --room information
 create table hotel (
 	id int not null generated always as identity,
