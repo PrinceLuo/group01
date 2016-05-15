@@ -68,8 +68,9 @@ create table customer(
 	lastname varchar(20),
 	email varchar(50) not null unique,
 	address varchar(100),
-	card_num varchar(10),
+	card_num varchar(16),
 	card_type varchar(20),
+	-- card_expirydate date not null,	
 	constraint chk_card_type check (card_type = 'VISA' or card_type = 'MasterCard' or card_type = 'America Express' or card_type = 'JCB' or card_type = 'UnionPay'),
 	primary key (id)
 );
@@ -117,5 +118,5 @@ create table detail(
 	foreign key (booking_id) references booking(id),
 	foreign key (hotel_id) references hotel(id),
 	foreign key (room_type_id) references room_type(id)
-	foreign key (pin) references booking(pin)
+	--foreign key (pin) references booking(pin)
 );
