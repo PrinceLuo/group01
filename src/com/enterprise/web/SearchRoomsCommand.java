@@ -21,8 +21,7 @@ public class SearchRoomsCommand implements Command{
 	public SearchRoomsCommand(){
 	}
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
@@ -33,20 +32,27 @@ public class SearchRoomsCommand implements Command{
 		sb.setCheckOut(request.getParameter("checkout"));
 		sb.setCity(request.getParameter("city"));
 		sb.setNoOfRooms(Integer.parseInt(request.getParameter("noofrooms")));
-		sb.setMaxPrice(request.getParameter("maxprice"));
-		
+		if (request.getParameter("maxprice")!=null && !request.getParameter("maxprice").equals("")) 
+			sb.setMaxPrice(request.getParameter("maxprice"));	
+
 		session.setAttribute("checkin", request.getParameter("checkin"));
 		session.setAttribute("checkout", request.getParameter("checkout"));
 		session.setAttribute("city", request.getParameter("city"));
 		session.setAttribute("noofrooms", request.getParameter("noofrooms"));
-		session.setAttribute("maxprice", request.getParameter("maxprice"));
+		if (request.getParameter("maxprice")!=null && !request.getParameter("maxprice").equals("") && !request.getParameter("maxprice").equals("0")) 
+			session.setAttribute("maxprice", request.getParameter("maxprice"));
+		else
+			session.setAttribute("maxprice","");
 		
 		// search result
 		RoomDAOImpl roomDAO = new RoomDAOImpl();
 
 		SearchResultBean[] l = roomDAO.SearchRooms(sb);
 		session.setAttribute("yourrooms", l);
-					
+			
+		// close db connection
+		roomDAO.Dispose();
+		
 		return "/searchresult.jsp";
 	}
 

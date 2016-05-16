@@ -14,7 +14,6 @@ import com.enterprise.business.DelegatesFactory;
 import com.enterprise.business.UserDelegateImpl;
 
 import com.enterprise.jdbc.DAO.RoomDAOImpl;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.enterprise.beans.RoomBean;
 
 /**
@@ -24,7 +23,7 @@ import com.enterprise.beans.RoomBean;
 public class HomeDisplayCommand implements Command{
 
 	private UserDelegateImpl userDelegate;
-	
+
 	private String Int2RoomType(int i) {
 		if (i == 1)
 			return "Single";
@@ -42,6 +41,7 @@ public class HomeDisplayCommand implements Command{
 	public HomeDisplayCommand(){
 		userDelegate = DelegatesFactory.getInstance().getUserDelegate();
 	}
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -61,22 +61,15 @@ public class HomeDisplayCommand implements Command{
 		}
 		session.setAttribute("rooms", rb);
 
+		
 		// special deals
 		//RoomDAOImpl roomDAO2 = new RoomDAOImpl();
 		ArrayList<Map<String, String>> l = roomDAO.getDiscountedRooms4Today();
 		session.setAttribute("specials", l);
 		
-		
-
-		// display all room types in a hotel
-		/*RoomDAOImpl roomDAO2 = new RoomDAOImpl();
-		roomDAO2.setHotelID(1);
-		ArrayList<Map<String, String>> l = roomDAO2.findAllByHotel();
-		session.setAttribute("roomlist", l);*/
-		
-		
-		
+		// close data src
+		roomDAO.Dispose();
+	
 		return "/home.jsp";
 	}
-
 }

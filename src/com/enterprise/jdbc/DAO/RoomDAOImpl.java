@@ -81,10 +81,8 @@ public class RoomDAOImpl implements RoomDAO {
 			     rs.beforeFirst();
 			     rs.next();
 			     iHotelID = rs.getInt("id");
-		     }
-		     
-		     
-		     
+		     }	     
+		     	     
 		     rs.beforeFirst();
 		     
 		  // Fetch each row from the result set
@@ -98,24 +96,29 @@ public class RoomDAOImpl implements RoomDAO {
 		    	  rm.put("hotel_id", rs.getString("hotel_id"));
 		    	  list.add(rm);
 		     }
+		     
+		     rs.close();
+		     stmt.close();
 		   } 
 		   catch (Exception e) {
 			   //throw new Exception(e.getMessage());
 			   System.out.println(e.getMessage());
 		   } 
-		   /*finally {
-		      if (conn != null) 
-		      {
-		         try {
-		           conn.close();
-		         } 
-		         catch (SQLException e1) 
-		         {
-		           e1.printStackTrace();
-		         }
-		      }
-		   }*/
+
 		   return list;
+	}
+	
+	public void Dispose() {
+	      if (conn != null) 
+	      {
+	         try {
+	           conn.close();
+	         } 
+	         catch (SQLException e1) 
+	         {
+	           e1.printStackTrace();
+	         }
+	      }		
 	}
 	
 	/**
@@ -164,23 +167,14 @@ public class RoomDAOImpl implements RoomDAO {
 		    	  rm.put("hotel_id", rs.getString("hotel_id"));
 		    	  list.add(rm);
 		     }
+		     rs.close();
+		     stmt.close();
 		   } 
 		   catch (Exception e) {
 			   //throw new Exception(e.getMessage());
 			   System.out.println(e.getMessage());
 		   } 
-		   /*finally {
-		      if (conn != null) 
-		      {
-		         try {
-		           conn.close();
-		         } 
-		         catch (SQLException e1) 
-		         {
-		           e1.printStackTrace();
-		         }
-		      }
-		   }*/
+
 		   return list;
 	}
 	
@@ -205,6 +199,7 @@ public class RoomDAOImpl implements RoomDAO {
 		     stmt.setString(1, sRoomType);
 		     stmt.setInt(2, iHotelID);
 		     ResultSet rs = stmt.executeQuery();
+		     
 		     // Fetch each row from the result set
 		     while (rs.next()) {
 		       int iHotel_ID = rs.getInt("hotel_id");
@@ -224,23 +219,14 @@ public class RoomDAOImpl implements RoomDAO {
 		       String sPath = "images/" + sRoom_Type + ".jpg";
 		       rb.setImagePath(sPath);
 		     }
+		     rs.close();
+		     stmt.close();
 		   } 
 		   catch (Exception e) {
 			   //throw new Exception(e.getMessage());
 			   System.out.println(e.getMessage());
 		   } 
-		   /*finally {
-		      if (conn != null) 
-		      {
-		         try {
-		           conn.close();
-		         } 
-		         catch (SQLException e1) 
-		         {
-		           e1.printStackTrace();
-		         }
-		      }
-		   }*/
+
 		   return rb;
 	}
 
@@ -257,6 +243,7 @@ public class RoomDAOImpl implements RoomDAO {
 		     + "INNER JOIN room_type as r ON d.room_type_id = r.id INNER JOIN hotel as h ON r.hotel_id = h.id "
 		     + "WHERE d.start_date <= CURRENT_DATE and d.end_date >= CURRENT_DATE", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		     ResultSet rs = stmt.executeQuery();
+		     
 		     rs.beforeFirst();
 		     // Fetch each row from the result set
 		     while (rs.next()) {
@@ -282,23 +269,16 @@ public class RoomDAOImpl implements RoomDAO {
 			      rm.put("imagepath", sPath);
 		    	  list.add(rm);
 		     }
+		     rs.close();
+		     stmt.close();
 	    } 
 	    catch (Exception e) {
 		   //throw new Exception(e.getMessage());
 		   System.out.println(e.getMessage());
 	    } 
-	    /*finally {
-	      if (conn != null) 
-	      {
-	         try {
-	           conn.close();
-	         } 
-	         catch (SQLException e1) 
-	         {
-	           e1.printStackTrace();
-	         }
-	      }
-	   }*/
+	    finally {
+	    	
+	   }
 	   return list;
 	}
 
@@ -308,6 +288,7 @@ public class RoomDAOImpl implements RoomDAO {
 	 */
 	public SearchResultBean[] SearchRooms(SearchBean sb) throws DataAccessException {
     	SearchResultBean[] srb = null;
+    	
 	    try 
 	    {
 	    	String sQuery = "";
@@ -337,6 +318,17 @@ public class RoomDAOImpl implements RoomDAO {
 	       
 	        formatter.setDecimalFormatSymbols(symbols);
 	        srb = new SearchResultBean[ar.size()];
+			PreparedStatement stmt = conn.prepareStatement(
+				       "SELECT rt.room_type, rt.hotel_id, rt.id, r.availability FROM room AS r "
+				     + "INNER JOIN room_type AS rt ON r.room_type_id = rt.id "
+				     + "WHERE rt.room_type=? AND rt.hotel_id=? AND r.availability<>'available'", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs =  null;
+			PreparedStatement stmt2 = conn.prepareStatement(
+				       "SELECT d.start_date, d.end_date, d.hotel_id, d.num_rooms, r.room_type, r.hotel_id FROM detail as d "
+				     + "INNER JOIN room_type as r ON d.room_type_id = r.id "
+				     + "WHERE (d.start_date>=? AND d.start_date<=? OR d.end_date>=? AND d.end_date<=?) AND r.hotel_id=? AND r.room_type=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs2 = null;
+			
 		    for (int i = 0; i < ar.size(); i++) {
 				srb[i] = new SearchResultBean();
 				Map<String, String> m = (Map<String, String>) ar.get(i);
@@ -355,15 +347,11 @@ public class RoomDAOImpl implements RoomDAO {
 				//sb.getCity();
 				//sb.getNoOfRooms();
 				//sb.getMaxPrice();
-				PreparedStatement stmt = conn.prepareStatement(
-				       "SELECT rt.room_type, rt.hotel_id, rt.id, r.availability FROM room AS r "
-				     + "INNER JOIN room_type AS rt ON r.room_type_id = rt.id "
-				     + "WHERE rt.room_type=? AND rt.hotel_id=? AND r.availability<>'available'", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			    
 				stmt.setString(1, srb[i].getRoomType());
 			    stmt.setInt(2, iHotelID);
 				     
-				ResultSet rs = stmt.executeQuery();
+				rs = stmt.executeQuery();
 				
 			    int iNot2Book = 0;  
 			    if (rs != null)   
@@ -371,48 +359,34 @@ public class RoomDAOImpl implements RoomDAO {
 			    	 rs.beforeFirst();  
 			    	 rs.last();  
 			    	 iNot2Book = rs.getRow();
-			    }
+			    }			    
 
     			// check detail table -> exclude rooms booked for the check-in time  			
-	
-				PreparedStatement stmt2 = conn.prepareStatement(
-				       "SELECT d.start_date, d.end_date, d.hotel_id, d.num_rooms, r.room_type, r.hotel_id FROM detail as d "
-				     + "INNER JOIN room_type as r ON d.room_type_id = r.id "
-				     + "WHERE (d.start_date>=? AND d.start_date<=? OR d.end_date>=? AND d.end_date<=?) AND r.hotel_id=? AND r.room_type=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 				stmt2.setString(1, sb.getCheckIn());
 				stmt2.setString(2, sb.getCheckOut());
 				stmt2.setString(3, sb.getCheckIn());
 				stmt2.setString(4, sb.getCheckOut());
 			    stmt2.setInt(5, iHotelID);
 				stmt2.setString(6, srb[i].getRoomType());
-			    ResultSet rs2 = stmt2.executeQuery();
-			     
+			    rs2 = stmt2.executeQuery();
+			    
 			    rs2.beforeFirst();
 			     
 			    // Fetch each row from the result set
 			    while (rs2.next()) {
 			    	iNot2Book += Integer.parseInt(rs2.getString("num_rooms")); 	 
 			    }
-			    
-			    srb[i].setNoOfNot2Book(iNot2Book);
+			    srb[i].setNoOfNot2Book(iNot2Book);			    
 			}
+		    rs.close();
+		    rs2.close();
+			stmt.close();
+			stmt2.close();
 	    } 
 	    catch (Exception e) {
 		   //throw new Exception(e.getMessage());
 		   System.out.println(e.getMessage());
 	    } 
-	    /*finally {
-	      if (conn != null) 
-	      {
-	         try {
-	           conn.close();
-	         } 
-	         catch (SQLException e1) 
-	         {
-	           e1.printStackTrace();
-	         }
-	      }
-	   }*/
 	   return srb;
 	}
 

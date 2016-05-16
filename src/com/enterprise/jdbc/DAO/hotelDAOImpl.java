@@ -28,7 +28,7 @@ public class hotelDAOImpl implements hotelDAO {
 		int iHotelID = 0;
 		try 
  	    {
-		     PreparedStatement stmt = conn.prepareStatement("SELECT id, location FROM hotel WHERE location=?",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		     PreparedStatement stmt = conn.prepareStatement("SELECT id, location FROM hotel WHERE location=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		     stmt.setString(1, sCity);
 		     ResultSet rs = stmt.executeQuery();
 		     
@@ -45,6 +45,8 @@ public class hotelDAOImpl implements hotelDAO {
 			     rs.next();
 			     iHotelID = rs.getInt("id");
 		     }
+		     rs.close();
+		     stmt.close();
 		} 
 		catch (Exception e) {
 			   System.out.println(e.getMessage());
@@ -52,4 +54,18 @@ public class hotelDAOImpl implements hotelDAO {
 
 		return iHotelID;
 	}
+	
+	public void Dispose() {
+	      if (conn != null) 
+	      {
+	         try {
+	           conn.close();
+	         } 
+	         catch (SQLException e1) 
+	         {
+	           e1.printStackTrace();
+	         }
+	      }		
+	}
+	
 }
