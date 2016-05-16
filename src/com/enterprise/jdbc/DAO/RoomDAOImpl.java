@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -230,18 +233,39 @@ public class RoomDAOImpl implements RoomDAO {
 		   return rb;
 	}
 
+	public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+	    return new java.sql.Date(date.getTime());
+	}
+	
 	/**
 	 * @todo Complete this method
-	 * @see com.enterprise.jdbc.DAO.RoomDAO#getDiscountedRooms4Today(string, int)
+	 * @see com.enterprise.jdbc.DAO.RoomDAO#getDiscountedRooms(Date dFrom, Date dTo)
 	 */
-	public ArrayList<Map<String, String>> getDiscountedRooms4Today() throws DataAccessException {
+	public ArrayList<Map<String, String>> getDiscountedHotelRooms(Date dFrom, Date dTo, int iHotel_ID) throws DataAccessException {
 	    ArrayList<Map<String, String>> list = new ArrayList<Map<String, String>>();
 	    try 
 	    {
-		     PreparedStatement stmt = conn.prepareStatement(
-		       "SELECT r.hotel_id, r.room_type, r.price, h.name, h.location, d.start_date, d.end_date, d.rate FROM discount as d "
+	    	String sQuery = "SELECT r.hotel_id, r.room_type, r.price, h.name, h.location, d.start_date, d.end_date, d.rate FROM discount as d "
 		     + "INNER JOIN room_type as r ON d.room_type_id = r.id INNER JOIN hotel as h ON r.hotel_id = h.id "
-		     + "WHERE d.start_date <= CURRENT_DATE and d.end_date >= CURRENT_DATE", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		     + "WHERE d.start_date <= ? AND d.end_date >= ? AND r.hotel_id=?";
+	    	if (iHotel_ID == 0) 
+	    		sQuery="SELECT r.hotel_id, r.room_type, r.price, h.name, h.location, d.start_date, d.end_date, d.rate FROM discount as d "
+	    			+ "INNER JOIN room_type as r ON d.room_type_id = r.id INNER JOIN hotel as h ON r.hotel_id = h.id "
+	    			+ "WHERE d.start_date <= ? AND d.end_date >= ?";
+	    	
+	    	//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	    	
+	    	//System.out.println(sdf.format(convertJavaDateToSqlDate(dFrom)));
+	    	//System.out.println(dFrom);
+	    	
+	    	PreparedStatement stmt = conn.prepareStatement(sQuery, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	    	stmt.setDate(1, convertJavaDateToSqlDate(dFrom));
+	    	stmt.setDate(2, convertJavaDateToSqlDate(dTo));
+	    	//stmt.setString(1, sdf.format(convertJavaDateToSqlDate(dFrom)));
+	    	//stmt.setString(2, sdf.format(convertJavaDateToSqlDate(dTo)));
+		     if (iHotel_ID > 0)
+		    	 stmt.setInt(3, iHotel_ID);
+		     
 		     ResultSet rs = stmt.executeQuery();
 		     
 		     rs.beforeFirst();
@@ -280,6 +304,13 @@ public class RoomDAOImpl implements RoomDAO {
 	    	
 	   }
 	   return list;
+	}
+	/**
+	 * @todo Complete this method
+	 * @see com.enterprise.jdbc.DAO.RoomDAO#getDiscountedRooms(Date dFrom, Date dTo)
+	 */
+	public ArrayList<Map<String, String>> getDiscountedRooms(Date dFrom, Date dTo) throws DataAccessException {
+	    return getDiscountedHotelRooms(dFrom, dTo, 0);
 	}
 
 	/**
@@ -328,10 +359,13 @@ public class RoomDAOImpl implements RoomDAO {
 				     + "INNER JOIN room_type as r ON d.room_type_id = r.id "
 				     + "WHERE (d.start_date>=? AND d.start_date<=? OR d.end_date>=? AND d.end_date<=?) AND r.hotel_id=? AND r.room_type=?", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs2 = null;
+						
+			ArrayList<Map<String, String>> alDiscount = getDiscountedHotelRooms(sb.getCheckIn(), sb.getCheckOut(), iHotelID);
 			
 		    for (int i = 0; i < ar.size(); i++) {
 				srb[i] = new SearchResultBean();
 				Map<String, String> m = (Map<String, String>) ar.get(i);
+				srb[i].setNoOfRooms(sb.getNoOfRooms());
 				srb[i].setRoomType(m.get("room_type"));
 
 				srb[i].setPrice(formatter.format(Double.parseDouble(m.get("price")))); 
@@ -362,10 +396,10 @@ public class RoomDAOImpl implements RoomDAO {
 			    }			    
 
     			// check detail table -> exclude rooms booked for the check-in time  			
-				stmt2.setString(1, sb.getCheckIn());
-				stmt2.setString(2, sb.getCheckOut());
-				stmt2.setString(3, sb.getCheckIn());
-				stmt2.setString(4, sb.getCheckOut());
+				stmt2.setDate(1, convertJavaDateToSqlDate(sb.getCheckIn()));
+				stmt2.setDate(2, convertJavaDateToSqlDate(sb.getCheckOut()));
+				stmt2.setDate(3, convertJavaDateToSqlDate(sb.getCheckIn()));
+				stmt2.setDate(4, convertJavaDateToSqlDate(sb.getCheckOut()));
 			    stmt2.setInt(5, iHotelID);
 				stmt2.setString(6, srb[i].getRoomType());
 			    rs2 = stmt2.executeQuery();
@@ -376,7 +410,18 @@ public class RoomDAOImpl implements RoomDAO {
 			    while (rs2.next()) {
 			    	iNot2Book += Integer.parseInt(rs2.getString("num_rooms")); 	 
 			    }
-			    srb[i].setNoOfNot2Book(iNot2Book);			    
+			    srb[i].setNoOfNot2Book(iNot2Book);	
+			    
+			    // Discount
+			    srb[i].setDiscountRate(0);
+			    for (int j = 0; j < alDiscount.size(); j++){
+			    	Map<String, String> m2 = (Map<String, String>)alDiscount.get(j);
+			    	if (m2.get("room_type").equals(srb[i].getRoomType())){
+			    		srb[i].setDiscountRate(Integer.parseInt(m2.get("rate")));
+				    	srb[i].setSpecialPrice(m2.get("specialprice"));
+				    	break;
+			    	}
+			    }		    
 			}
 		    rs.close();
 		    rs2.close();
@@ -388,6 +433,14 @@ public class RoomDAOImpl implements RoomDAO {
 		   System.out.println(e.getMessage());
 	    } 
 	   return srb;
+	}
+
+	private ArrayList<Map<String, String>> getDiscountedHotelRooms(LocalDate dFrom, LocalDate dTo, int iHotelID2) throws ParseException
+	{
+		java.util.Date d1 = new SimpleDateFormat("MM/dd/yyyy").parse(dFrom.toString());
+		java.util.Date d2 = new SimpleDateFormat("MM/dd/yyyy").parse(dTo.toString());
+		return getDiscountedHotelRooms(d1, d2, iHotelID2);
+
 	}
 
 }

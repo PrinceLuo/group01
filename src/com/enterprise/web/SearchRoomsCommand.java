@@ -1,7 +1,10 @@
 package com.enterprise.web;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +24,25 @@ public class SearchRoomsCommand implements Command{
 	public SearchRoomsCommand(){
 	}
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		
 		// get search option & text
 		SearchBean sb = new SearchBean();
 		
-		sb.setCheckIn(request.getParameter("checkin"));
-		sb.setCheckOut(request.getParameter("checkout"));
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		//surround below line with try catch block as below code throws checked exception
+		try {
+		Date dDate = sdf.parse(request.getParameter("checkin"));
+		sb.setCheckIn(dDate);
+		Date dDate2 = sdf.parse(request.getParameter("checkout"));
+		sb.setCheckOut(dDate2);
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 		sb.setCity(request.getParameter("city"));
 		sb.setNoOfRooms(Integer.parseInt(request.getParameter("noofrooms")));
 		if (request.getParameter("maxprice")!=null && !request.getParameter("maxprice").equals("")) 

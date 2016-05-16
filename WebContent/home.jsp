@@ -98,13 +98,13 @@ if (sValue != null)
 <form action='dispatcher' method='post'>
 <table><tr>
 	<th><label for="checkin">Check-In Date</label></th>
-	<td><input type="text" value="<%=sCheckIn%>" name='checkin'></td></tr>
+	<td><input type="text" value="<%=sCheckIn %>" name='checkin' required></td></tr>
 	<tr><th><label for="checkout">Check-Out Date</label></th>
-	<td><input type="text" value="<%=sCheckOut%>" name='checkout'></td></tr>
+	<td><input type="text" value="<%=sCheckOut%>" name='checkout' required></td></tr>
 	<tr><th><label for="city">City</label></th>
-	<td><input type="text" value="<%=sCity%>" name='city'></td></tr>
+	<td><input type="text" value="<%=sCity%>" name='city' required></td></tr>
 	<tr><th><label for="noofrooms">No of Rooms</label></th>
-	<td><input type="text" value="<%=sNoOfRooms%>" name='noofrooms'></td></tr>
+	<td><input type="text" value="<%=sNoOfRooms%>" name='noofrooms' required></td></tr>
 	<tr><th><label for="maxprice">Maximum Price per room </label></th>
 	<td><input type="text" value="<%=sMaxPrice%>" name='maxprice'></td></tr>
 	<tr><td colspan=2 align=center><input type="hidden" name="operation" value="searchrooms">

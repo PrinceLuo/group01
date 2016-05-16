@@ -17,8 +17,8 @@ public class SearchBean {
 	 * be the same as the attributes from
 	 * table rooms
 	 */
-	private String sCheckIn;
-	private String sCheckOut;
+	private Date dCheckIn;
+	private Date dCheckOut;
 	private String sCity;
 	private int iNoOfRooms;
 	private String sMaxPrice;
@@ -29,18 +29,18 @@ public class SearchBean {
 	public SearchBean() {
 	}
 	
-	public String getCheckIn() {
-		return sCheckIn;
+	public Date getCheckIn() {
+		return dCheckIn;
 	}
-	public void setCheckIn(String sValue) {
-		sCheckIn = sValue;
+	public void setCheckIn(Date dValue) {
+		dCheckIn = dValue;
 	}
 	
-	public String getCheckOut() {
-		return sCheckOut;
+	public Date getCheckOut() {
+		return dCheckOut;
 	}
-	public void setCheckOut(String sValue) {
-		sCheckOut = sValue;
+	public void setCheckOut(Date dValue) {
+		dCheckOut = dValue;
 	}
 	
 	public String getCity() {

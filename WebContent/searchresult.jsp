@@ -40,7 +40,7 @@
 		<td><table width="298" border=1>
 			    <tr><td rowspan='3' width='138' align="center"><a href="userlogin.jsp" class="button"><img src='${special.imagepath}' width='138' height='92' style="border-style: none" /></a></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${special.room_type}</td></tr>
 			    <tr><TH>City</TH><td align='center'>${special.city}</td></tr>
-			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle"><del>${special.price}</del><br /><red><b>${special.specialprice}</b></red><br /><red><b>${special.rate}% discount!</b></red></td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle"><del>${special.price}</del><br /><b>${special.specialprice}</b><br /><b>${special.rate}% discount!</b></td></tr>
 		</table></td>
 		<% if ((iCount % 3)==0) { %>
 		</tr><tr>
@@ -52,15 +52,24 @@
 <h1>Search Result</h1><br />
 <table><tr>
 	<c:forEach items='${yourrooms}' var='yourroom'>
+	  <c:choose>
+	   <c:when test='${yourroom.getTotalNum()>=yourroom.getNoOfRooms()+yourroom.getNoOfNot2Book()}'>
 		<% iCount++; %>
 		<td><table width="298" border=1>
 			    <tr><td rowspan='3' width='138' align="center"><img src='${yourroom.getImagePath()}' width='138' height='92' style="border-style: none" /></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${yourroom.getRoomType()}</td></tr>
 			    <tr><TH>City</TH><td align='center'>${yourroom.getCity()}</td></tr>
-			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle">${yourroom.getPrice()}</td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle">
+				    <c:choose>
+					  <c:when test='${yourroom.getDiscountRate()==0}'>${yourroom.getPrice()}</c:when>
+					  <c:otherwise><del>${yourroom.getPrice()}</del><br /><b>${yourroom.getSpecialPrice()}</b><br /><b>${yourroom.getDiscountRate()}% discount!</b></c:otherwise>
+					</c:choose>  
+			    </td></tr>
 		</table></td>
 		<% if ((iCount % 3)==0) { %>
 		</tr><tr>
 		<% } %>
+	   </c:when>
+	  </c:choose> 
 	</c:forEach>
 </tr></table>
 
@@ -94,13 +103,13 @@ if (sValue != null)
 <form action='dispatcher' method='post'>
 <table><tr>
 	<th><label for="checkin">Check-In Date</label></th>
-	<td><input type="text" value="<%=sCheckIn%>" name='checkin'></td></tr>
+	<td><input type="text" value="<%=sCheckIn %>" name='checkin' required></td></tr>
 	<tr><th><label for="checkout">Check-Out Date</label></th>
-	<td><input type="text" value="<%=sCheckOut%>" name='checkout'></td></tr>
+	<td><input type="text" value="<%=sCheckOut%>" name='checkout' required></td></tr>
 	<tr><th><label for="city">City</label></th>
-	<td><input type="text" value="<%=sCity%>" name='city'></td></tr>
+	<td><input type="text" value="<%=sCity%>" name='city' required></td></tr>
 	<tr><th><label for="noofrooms">No of Rooms</label></th>
-	<td><input type="text" value="<%=sNoOfRooms%>" name='noofrooms'></td></tr>
+	<td><input type="text" value="<%=sNoOfRooms%>" name='noofrooms' required></td></tr>
 	<tr><th><label for="maxprice">Maximum Price per room </label></th>
 	<td><input type="text" value="<%=sMaxPrice%>" name='maxprice'></td></tr>
 	<tr><td colspan=2 align=center><input type="hidden" name="operation" value="searchrooms">

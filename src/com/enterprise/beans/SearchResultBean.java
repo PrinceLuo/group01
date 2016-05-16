@@ -24,15 +24,18 @@ public class SearchResultBean {
 	private int iNoOfRooms;
 	private String sMaxPrice;
 
-	private String sSpecialPrice;
-	private String sImgPath;
-	private double dDiscountRate;
-
 	// a room type, price, tot_num obtained from room_type table based on City searchtext
 	private String sPrice;
 	private String sRoomType;
 	private int iTotalNum;
 	private int iNoOfNot2Book;
+
+	// can be set if found in discount deal list
+	private String sSpecialPrice;
+	private int iDiscountRate;
+	
+	// set for displaying the image
+	private String sImgPath;
 
 	/**
 	 * Empty constructor
@@ -41,13 +44,13 @@ public class SearchResultBean {
 	}
 	
 	public Date geCheckIn() {
-		iireturn dCheckIn;
+		return dCheckIn;
 	}
 	public void setCheckIn(Date dValue) {
 		dCheckIn = dValue;
 	}
 	
-	public Date geCheckOut() {
+	public Date getCheckOut() {
 		return dCheckOut;
 	}
 	public void setCheckOut(Date dValue) {
@@ -94,11 +97,11 @@ public class SearchResultBean {
 	public void setImagePath(String sValue) {
 		sImgPath = sValue;
 	}
-	public double getDiscountRate() {
-		return dDiscountRate;
+	public int getDiscountRate() {
+		return iDiscountRate;
 	}
-	public void setDiscountRate(double dValue) {
-		dDiscountRate = dValue;
+	public void setDiscountRate(int iValue) {
+		iDiscountRate = iValue;
 	}
 	public String getRoomType() {
 		return sRoomType;

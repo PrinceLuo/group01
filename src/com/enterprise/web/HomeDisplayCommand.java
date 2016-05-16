@@ -2,6 +2,7 @@ package com.enterprise.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
@@ -61,10 +62,9 @@ public class HomeDisplayCommand implements Command{
 		}
 		session.setAttribute("rooms", rb);
 
-		
 		// special deals
-		//RoomDAOImpl roomDAO2 = new RoomDAOImpl();
-		ArrayList<Map<String, String>> l = roomDAO.getDiscountedRooms4Today();
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		ArrayList<Map<String, String>> l = roomDAO.getDiscountedRooms(date, date);
 		session.setAttribute("specials", l);
 		
 		// close data src
