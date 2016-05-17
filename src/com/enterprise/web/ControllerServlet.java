@@ -25,6 +25,7 @@ public class ControllerServlet extends HttpServlet {
     	 */
         super();
         commands = new HashMap<String, Command>();
+        commands.put("searchrooms", new SearchRoomsCommand());
         commands.put("stafflogin", new StaffLoginCommand());
         commands.put("register", new RegisterCommand());
         commands.put("assign", new AllocateCommand());
@@ -33,6 +34,12 @@ public class ControllerServlet extends HttpServlet {
         commands.put("customerlogin", new CustomerLoginCommand());
         commands.put("profileedit", new ProfileEditCommand());
         commands.put("homedisplay", new HomeDisplayCommand());
+        commands.put("ownerlogin", new OwnerLoginCommand());
+        commands.put("setmaintenance", new SetMaintanceCommand());
+        commands.put("search", new SearchCommand());
+        commands.put("addCart", new AddCartCommand());
+        commands.put("shopping_cart", new GetCartCommand());
+        
         // TODO Auto-generated constructor stub
     }
     

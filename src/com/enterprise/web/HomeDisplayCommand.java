@@ -2,6 +2,7 @@ package com.enterprise.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,7 +15,6 @@ import com.enterprise.business.DelegatesFactory;
 import com.enterprise.business.UserDelegateImpl;
 
 import com.enterprise.jdbc.DAO.RoomDAOImpl;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import com.enterprise.beans.RoomBean;
 
 /**
@@ -24,7 +24,7 @@ import com.enterprise.beans.RoomBean;
 public class HomeDisplayCommand implements Command{
 
 	private UserDelegateImpl userDelegate;
-	
+
 	private String Int2RoomType(int i) {
 		if (i == 1)
 			return "Single";
@@ -42,6 +42,7 @@ public class HomeDisplayCommand implements Command{
 	public HomeDisplayCommand(){
 		userDelegate = DelegatesFactory.getInstance().getUserDelegate();
 	}
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -49,35 +50,26 @@ public class HomeDisplayCommand implements Command{
 		HttpSession session = request.getSession();
 		Random randomGenerator = new Random();
 
-		RoomDAOImpl[] roomDAO = new RoomDAOImpl[6];
+		RoomDAOImpl roomDAO = new RoomDAOImpl();
 		RoomBean[] rb = new RoomBean[6];
 		for  (int i = 0; i < 6; i++) {
 			// show a random room type of hotel 1
-			roomDAO[i] = new RoomDAOImpl();
-			roomDAO[i].setHotelID(i+1);		
+			roomDAO.setHotelID(i+1);
 			int randomInt = randomGenerator.nextInt(5)+1;
-			roomDAO[i].setRoomType(Int2RoomType(randomInt));
+			roomDAO.setRoomType(Int2RoomType(randomInt));
 			
-			rb[i] = roomDAO[i].getRoom();
+			rb[i] = roomDAO.getRoom();
 		}
 		session.setAttribute("rooms", rb);
 
 		// special deals
-		RoomDAOImpl roomDAO2 = new RoomDAOImpl();
-		ArrayList<Map<String, String>> l = roomDAO2.getDiscountedRooms4Today();
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		ArrayList<Map<String, String>> l = roomDAO.getDiscountedRooms(date, date);
 		session.setAttribute("specials", l);
 		
-		
-
-		// display all room types in a hotel
-		/*RoomDAOImpl roomDAO2 = new RoomDAOImpl();
-		roomDAO2.setHotelID(1);
-		ArrayList<Map<String, String>> l = roomDAO2.findAllByHotel();
-		session.setAttribute("roomlist", l);*/
-		
-		
-		
+		// close data src
+		roomDAO.Dispose();
+	
 		return "/home.jsp";
 	}
-
 }

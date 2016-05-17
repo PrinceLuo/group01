@@ -7,7 +7,9 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 import com.enterprise.beans.UserBean;
+import com.enterprise.jdbc.bookingDTO;
 import com.enterprise.jdbc.customerDTO;
+import com.enterprise.jdbc.detailDTO;
 import com.enterprise.jdbc.DAO.customerDAOImpl;
 
 /**
@@ -111,6 +113,21 @@ public class UserServiceImpl extends Service {
 		customerDTO change = customerDAO.find(old.getUsername());
 		return change;
 	}
+	
+	public detailDTO search(String from, String to, String city, String roomtype){
+		
+		detailDTO re = customerDAO.search(from, to, city, roomtype);
+		return re;
+	}
+	
+	public void insertCart(int customer_id, detailDTO re){
+		customerDAO.insertCart(customer_id, re);
+	}
+	
+	public bookingDTO getCart(int userID){
+		return customerDAO.getCart(userID);
+	}
+	
 	/**
 	 * Methods that inherit from the interface Service
 	 */

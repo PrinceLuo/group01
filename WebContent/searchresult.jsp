@@ -10,13 +10,8 @@
 <title>Welcome</title>
 </head>
 <body>
-Welcome to Program Hotel!<br /><br />
+<h1>Welcome to Program Hotel!</h1><br />
 
-<%
-String sWhat2Search = "";
-//if (request.getParameter("searchtext")!=null)
-//	sWhat2Search = request.getParameter("searchtext");
-%>
 <!--jsp:useBean id="rooms" class="com.enterprise.beans.RoomBean" scope="session" /-->
 
 
@@ -45,7 +40,7 @@ String sWhat2Search = "";
 		<td><table width="298" border=1>
 			    <tr><td rowspan='3' width='138' align="center"><a href="userlogin.jsp" class="button"><img src='${special.imagepath}' width='138' height='92' style="border-style: none" /></a></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${special.room_type}</td></tr>
 			    <tr><TH>City</TH><td align='center'>${special.city}</td></tr>
-			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle"><del>${special.price}</del><br /><red><b>${special.specialprice}</b></red><br /><red><b>${special.rate}% discount!</b></red></td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle"><del>${special.price}</del><br /><b>${special.specialprice}</b><br /><b>${special.rate}% discount!</b></td></tr>
 		</table></td>
 		<% if ((iCount % 3)==0) { %>
 		</tr><tr>
@@ -53,23 +48,33 @@ String sWhat2Search = "";
 	</c:forEach>
 </tr></table>
 
-
-<!-- h1>All Room types in a hotel</h1><br />
-<table width="100%" border=1>
-<tr>
-    <th>Room Type</th><TH>Price</TH><TH>Total No</TH><TH>Hotel ID</TH>
-</tr>
-</tr>
-	<c:forEach items='${roomlist}' var='room'>
-		<tr>
-			<td>${room.room_type}</td>
-			<td>${room.price}</td>
-			<td>${room.total_num}</td>
-			<td>${room.hotel_id}</td>
-		</tr>
+<% iCount = 0; %>
+<h1>Search Result</h1><br />
+<table><tr>
+	<c:forEach items='${yourrooms}' var='yourroom'>
+	  <c:choose>
+	   <c:when test='${yourroom.getTotalNum()>=yourroom.getNoOfRooms()+yourroom.getNoOfNot2Book()}'>
+		<% iCount++; %>
+		<td><table width="298" border=1>
+			    <tr><td rowspan='3' width='138' align="center"><img src='${yourroom.getImagePath()}' width='138' height='92' style="border-style: none" /></td><th width='50'>Room<br />Type</th><td align='center' width='80'>${yourroom.getRoomType()}</td></tr>
+			    <tr><TH>City</TH><td align='center'>${yourroom.getCity()}</td></tr>
+			    <tr><TH valign="middle">Price</TH><td align='center' valign="middle">
+				    <c:choose>
+					  <c:when test='${yourroom.getDiscountRate()==0}'>${yourroom.getPrice()}</c:when>
+					  <c:otherwise><del>${yourroom.getPrice()}</del><br /><b>${yourroom.getSpecialPrice()}</b><br /><b>${yourroom.getDiscountRate()}% discount!</b></c:otherwise>
+					</c:choose>  
+			    </td></tr>
+		</table></td>
+		<% if ((iCount % 3)==0) { %>
+		</tr><tr>
+		<% } %>
+	   </c:when>
+	  </c:choose> 
 	</c:forEach>
+</tr></table>
 
-</TABLE-->
+
+
 <%
 String sCheckIn="";
 String sCheckOut="";
@@ -111,8 +116,6 @@ if (sValue != null)
     <input type='submit' value='Search' name='search'></td></tr>
 </table>
 </form>
-
-
 
 <div style="position: absolute; top: 0; right: 0;"><a href="userlogin.jsp" class="button">Sigh-in/Sign-up</a></div>
 </body>

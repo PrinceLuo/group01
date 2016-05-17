@@ -9,6 +9,8 @@ public class roomtypeDTO {
 	private BigDecimal price;
 	private int num;
 	private int hotel_id;
+	private int occ;
+	private int ava;
 	private List<roomDTO> room;
 	private discountDTO discount;
 	private detailDTO detail; //used for update available_num in DB
@@ -16,11 +18,11 @@ public class roomtypeDTO {
 	public roomtypeDTO(){
 		
 	}
-	public roomtypeDTO(int id, String room_type, BigDecimal price, int available_num, int hotel_id){
+	public roomtypeDTO(int id, String room_type, BigDecimal price, int total_num, int hotel_id){
 		this.id = id;
 		this.room_type = room_type;
 		this.price = price;
-		this.num = available_num;
+		this.num = total_num;
 		this.hotel_id = hotel_id;
 	}
 	
@@ -45,8 +47,8 @@ public class roomtypeDTO {
 	public int getNum(){
 		return this.num;
 	}
-	public void setNum(int available_num){
-		this.num = available_num;
+	public void setNum(int total_num){
+		this.num = total_num;
 	}
 	public int getHotelid(){
 		return this.hotel_id;
@@ -71,5 +73,18 @@ public class roomtypeDTO {
 	}
 	public void setDetail(detailDTO detail){
 		this.detail = detail;
+	}
+	
+	public int getOcc(){
+			return this.occ;
+	}
+	public void setOcc(int occ){
+		this.occ = occ;
+	}
+	public int getAva(){
+		return this.ava;
+	}
+	public void setAva(int ava){
+		this.ava = ava;
 	}
 }

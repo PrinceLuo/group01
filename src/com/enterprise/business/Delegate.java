@@ -1,8 +1,12 @@
 
 package com.enterprise.business;
 
+import java.util.ArrayList;
+
 import com.enterprise.beans.UserBean;
+import com.enterprise.jdbc.bookingDTO;
 import com.enterprise.jdbc.customerDTO;
+import com.enterprise.jdbc.detailDTO;
 import com.enterprise.service.Service;
 
 /**
@@ -49,5 +53,21 @@ public abstract class Delegate {
 	
 	public customerDTO editProfile(customerDTO old){
 		return getService().editProfile(old);
+	}
+	
+	public UserBean ownerlogin(String username, String password){
+		 return getService().ownerlogin(username, password);
+	}
+	
+	public detailDTO search(String from, String to, String city, String roomtype){
+		return getService().search(from, to, city, roomtype);
+	}
+	
+	public void insertCart(int customer_id, detailDTO re){
+		getService().insertCart(customer_id, re);
+	}
+	
+	public bookingDTO getCart(int userID){
+		return getService().getCart(userID);
 	}
 }

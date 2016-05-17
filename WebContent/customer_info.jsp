@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Customer Profile</title>
 <!-- table css -->
-<link rel="stylesheet" href="table.css" type"text/css" media="screen, projection">
+<link rel="stylesheet" href="table.css" type="text/css" media="screen, projection">
 </head>
 <body>
 <%
@@ -36,6 +36,33 @@
 %>
 <form method="get" action="profile_edit.jsp">
     <button type="submit">Edit My Profile</button>
+</form>
+<br/><br/>
+<!-- Search -->
+<form action="dispatcher" method="post">
+<h1>Search rooms:</h1><br/>
+<h3>From:</h3>
+<input type="text" name="fromyear" />-<input type="text" name="frommonth" />-<input type="text" name="fromday" /> 
+<h3>To:</h3>
+<input type="text" name="toyear" />-<input type="text" name="tomonth" />-<input type="text" name="today" /> 
+<br/>
+City: <select name="city"><option selected="selected">Sydney</option>
+				<option>Melbourne</option>
+				<option>Brisbane</option>
+				<option>Adelaide</option>
+				<option>Hobart</option>
+				<option>Perth</option></select> RoomType: <select name="roomtype"><option selected="selected">Single</option>
+				<option>Twin</option>
+				<option>Queen</option>
+				<option>Executive</option>
+				<option>Suite</option></select>
+<input type="hidden" name="operation" value="search" />
+<input type="submit" value="Search" />
+</form>
+<form action="dispatcher" method="get">
+	<input type="hidden" name="operation" value="shopping_cart" />
+	<input type="hidden" name="userID" value="<%=customer.getID()  %>">
+<input type="submit" value="Go To Shopping Cart" />
 </form>
 </body>
 </html>

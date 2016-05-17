@@ -1,5 +1,7 @@
 package com.enterprise.jdbc.DAO;
 
+import java.util.ArrayList;
+
 import com.enterprise.exception.DataAccessException;
 import com.enterprise.jdbc.*;
 
@@ -10,7 +12,9 @@ public interface customerDAO {
 	
 	void updateCustomer(customerDTO customer) throws DataAccessException;
 	
-	void insertCart(int customer_id) throws DataAccessException;//before the first time user adding detail to cart should employ this 
+	detailDTO search(String from, String to, String city, String roomtype) throws DataAccessException; // search the rooms for customer
+	
+	void insertCart(int customer_id, detailDTO re) throws DataAccessException;//before the first time user adding detail to cart should employ this 
 	
 	void insertConfirm(bookingDTO booking) throws DataAccessException;// insert a row in booking table with pin
 	
@@ -24,5 +28,5 @@ public interface customerDAO {
 	
 	void addconBooking(detailDTO detail) throws DataAccessException;//add booking to detail table with and bond with booking_id (have pin)
 	
-	
+	bookingDTO getCart(int userID) throws DataAccessException; // get the shopping cart list
 }

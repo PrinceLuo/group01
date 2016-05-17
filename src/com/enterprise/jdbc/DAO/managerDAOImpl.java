@@ -78,14 +78,14 @@ public class managerDAOImpl implements managerDAO {
 				int id = rs.getInt("id");
 				int bid = rs.getInt("booking_id");
 				String pin=rs.getString("pin");
-				Date start=rs.getDate("start_date");
-				Date end=rs.getDate("end_date");
+				//Date start=rs.getDate("start_date");
+				//Date end=rs.getDate("end_date");
 				int hid=rs.getInt("hotel_id");
 				int tid=rs.getInt("room_type_id");
 				int extrabed=rs.getInt("extra_bed");
 				int numRooms=rs.getInt("num_rooms");
-				detailDTO d = new detailDTO(id,bid,pin,start,end,hid,tid,extrabed,numRooms,null);
-				bookings.add(d);
+				//detailDTO d = new detailDTO(id,bid,pin,start,end,hid,tid,extrabed,numRooms,null);
+				//bookings.add(d);
 			}
 			stmt.close();
 			return bookings;

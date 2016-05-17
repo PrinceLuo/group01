@@ -1,8 +1,12 @@
 
 package com.enterprise.service;
 
+import java.util.ArrayList;
+
 import com.enterprise.beans.UserBean;
+import com.enterprise.jdbc.bookingDTO;
 import com.enterprise.jdbc.customerDTO;
+import com.enterprise.jdbc.detailDTO;
 
 /**
  * @author group01
@@ -31,6 +35,21 @@ public abstract class Service {
 	}
 	
 	public customerDTO editProfile(customerDTO old){
+		return null;
+	}
+	
+	public UserBean ownerlogin(String username, String password){
+		return null;
+	}
+	
+	public detailDTO search(String from, String to, String city, String roomtype){
+		return null;
+	}
+	
+	public void insertCart(int customer_id, detailDTO re){
+	}
+	
+	public bookingDTO getCart(int userID){
 		return null;
 	}
 	/**
