@@ -14,15 +14,16 @@ public interface ownerDAO {
 	
 	List<hotelDTO> getHotels() throws DataAccessException;
 	List<roomtypeDTO> getRoomtype(int hotel_id) throws DataAccessException;
-	hotelDTO getHotelbyTypeid(int room_type_id) throws DataAccessException;
+	hotelDTO getHotel(int id) throws DataAccessException;
 	int countAllRooms(int hid) throws DataAccessException;
 	int countFullRooms(int hid) throws DataAccessException;
-	roomtypeDTO getType(int id) throws DataAccessException;
+
 	void setMaintenance(int roomid) throws DataAccessException;
-	
 	void insertDiscount(discountDTO discount) throws DataAccessException;
-	
+	List<roomDTO> getRoomsbyHotel(int hotel_id) throws DataAccessException;
 	void setPeak(String name, String current, String start,String end,int rate) throws DataAccessException;
 
 	boolean checkAvailabiblity(int roomid) throws DataAccessException;
+
+	roomtypeDTO getType(String type, int hotelid) throws DataAccessException;
 }

@@ -37,25 +37,31 @@ public class OwnerLoginCommand implements Command {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		UserBean owner = oDelegate.ownerlogin(username, password);
-		if(owner == null){
+		ownerDAO o=new ownerDAOImpl();
+		UserBean owner = new UserBean();
+		staffDTO ownerInfo =o.find(username);
+		if(!password.equals(ownerInfo.getPassword())){
 			HttpSession session = request.getSession();
 			session.setAttribute("user", owner);
-			return "/ownerfail.jsp"; 
-		} else{
+			return "/ownerfail.jsp";
+		} else{	
+			owner.setUsername(username);
+			owner.setPassword(password);
+			owner.setType(ownerInfo.getType());
 			HttpSession session = request.getSession();
 			session.setAttribute("user", owner);
 			//add attribute to provide access to database
-			ownerDAO o=new ownerDAOImpl();
-			List<hotelDTO> hotels = o.getHotels();
+			ownerDAO o1=new ownerDAOImpl();
+			List<hotelDTO> hotels = o1.getHotels();
 			for(hotelDTO hotel : hotels){
-				int t_occ = 0, t_ava = 0;
+				int occ = 0, ava = 0;
 				int id = hotel.getID();
-				List<roomtypeDTO> roomt = o.getRoomtype(id);
+				ownerDAO o2=new ownerDAOImpl();
+				List<roomtypeDTO> roomt = o2.getRoomtype(id);
 				hotel.setRoomtypelist(roomt);
 				for(roomtypeDTO roomtype : roomt){
-					List<roomDTO> rooms = o.getRooms(hotel.getID(), roomtype.getID());
-					int occ = 0, ava = 0;
+					ownerDAO o3=new ownerDAOImpl();
+					List<roomDTO> rooms = o3.getRooms(hotel.getID(), roomtype.getID());
 					roomtype.setRoomlist(rooms);
 					for(roomDTO room : rooms){
 						if(room.getAvailability().equals("available")){
@@ -64,17 +70,18 @@ public class OwnerLoginCommand implements Command {
 							occ += 1;
 						}
 					}
-					roomtype.setAva(ava);
-					roomtype.setOcc(occ);
-					t_occ = t_occ + occ;
-					t_ava = t_ava + ava;
 				}
-				hotel.setAva(t_ava);
-				hotel.setOcc(t_occ);
-
+				hotel.setAva(ava);
+				hotel.setOcc(occ);
 			}
+			String m = null;
+			session.setAttribute("mm", m);
+			session.setAttribute("d", m);
+			session.setAttribute("p", m);
 			session.setAttribute("hotels", hotels);
 			return "/ownersuccess.jsp"; 
+		
+		
 		}
 	}
 }

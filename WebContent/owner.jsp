@@ -8,7 +8,7 @@
 </head>
 <body>
 <body>
-	<form action="dispatcher" method="post">
+<form action="dispatcher" method="post">
 Username: 
 	<input type="text" name="username" />
 Password: 

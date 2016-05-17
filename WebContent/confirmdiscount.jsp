@@ -16,7 +16,7 @@
 	<h1>Discount detail</h1>
 	<table border = "1">
 		<tr><th>hotel name</th> <td>${discount.getName() }</td></tr>
-		<tr><th>hotel location</th><td>${discounts.getLocation() }</td></tr>
+		<tr><th>hotel location</th><td>${discount.getLocation() }</td></tr>
 		<tr><th>room type</th><td>${discount.getType() }</td></tr>
 		<tr><th>start date</th><td>${discount.getStartdate() }</td></tr>
 		<tr><th>end date</th><td>${discount.getEnddate() }</td></tr>

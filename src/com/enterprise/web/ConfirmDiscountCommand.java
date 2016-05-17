@@ -30,6 +30,8 @@ public class ConfirmDiscountCommand implements Command {
 		Date cd = new Date();
 		d.setCurrentdate(dateFormat.format(cd));
 		o.insertDiscount(d);
+		String message = "success";
+		session.setAttribute("d", message);
 		return "/ownersuccess.jsp";
 	}
 

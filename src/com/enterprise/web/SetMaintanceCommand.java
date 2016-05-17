@@ -29,27 +29,50 @@ public class SetMaintanceCommand implements Command {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		if(request.getParameterValues("roomids")!=null && !request.getParameter("roomids").isEmpty()){
-			String[] roomids=request.getParameterValues("roomids");
+		String step = "findrooms";
+		String message = null;
+		if(step.equals(request.getParameter("step"))) {
+			if(request.getParameter("hotelid") == null){
+				message = "rid";
+				session.setAttribute("mm", message);
+				return "/ownersuccess.jsp";
+			}
+			int id = Integer.parseInt(request.getParameter("hotelid"));
 			ownerDAO o=new ownerDAOImpl();
+			List<roomDTO> rooms = o.getRoomsbyHotel(id);
+			session.setAttribute("rooms", rooms);
+			return "/setmaintenance.jsp";
+			
+		}
+		step = "maintenance";
+		if(request.getParameterValues("roomids")!=null  && step.equals(request.getParameter("step"))){
+			String[] roomids=request.getParameterValues("roomids");
+			
 			for(int i=0;i<roomids.length;i++){
 				int roomid=Integer.parseInt(roomids[i]);
+				ownerDAO o=new ownerDAOImpl();
 				if(o.checkAvailabiblity(roomid)){
-					o.setMaintenance(roomid);
+					ownerDAO o1=new ownerDAOImpl();
+					o1.setMaintenance(roomid);
 				}else{
-					System.out.println("set maintenance error");
+					message = "fail";
+					session.setAttribute("mm", message);
+				    return "/setmaintenance.jsp";
 				}
 					
 			}
-			List<hotelDTO> hotels = o.getHotels();
+			ownerDAO o2=new ownerDAOImpl();
+			List<hotelDTO> hotels = o2.getHotels();
 			for(hotelDTO hotel : hotels){
-				int t_occ = 0, t_ava = 0;
+				int occ = 0, ava = 0;
 				int id = hotel.getID();
-				List<roomtypeDTO> roomt = o.getRoomtype(id);
+				ownerDAO o3=new ownerDAOImpl();
+				List<roomtypeDTO> roomt = o3.getRoomtype(id);
 				hotel.setRoomtypelist(roomt);
 				for(roomtypeDTO roomtype : roomt){
-					List<roomDTO> rooms = o.getRooms(hotel.getID(), roomtype.getID());
-					int occ = 0, ava = 0;
+					ownerDAO o4=new ownerDAOImpl();
+					List<roomDTO> rooms = o4.getRooms(hotel.getID(), roomtype.getID());
+					
 					roomtype.setRoomlist(rooms);
 					for(roomDTO room : rooms){
 						if(room.getAvailability().equals("available")){
@@ -58,18 +81,17 @@ public class SetMaintanceCommand implements Command {
 							occ += 1;
 						}
 					}
-					roomtype.setAva(ava);
-					roomtype.setOcc(occ);
-					t_occ = t_occ + occ;
-					t_ava = t_ava + ava;
 				}
-				hotel.setAva(t_ava);
-				hotel.setOcc(t_occ);
+				hotel.setAva(ava);
+				hotel.setOcc(occ);
 			}
+			message = "success";
+			session.setAttribute("mm",message);
 			session.setAttribute("hotels", hotels);
 			return "/ownersuccess.jsp"; 
 		}
-		
+		message = "fail";
+		session.setAttribute("mm",message);
 		return "/ownersuccess.jsp";
 
 		// TODO Auto-generated method stub

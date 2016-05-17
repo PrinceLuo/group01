@@ -29,19 +29,33 @@ public class SetPeakCommand implements Command {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		ownerDAOImpl o = new ownerDAOImpl();
+		String message = null;
 		Date cd = new Date();
 		String n = request.getParameter("name");
 		String sd = request.getParameter("startdate");
 		String ed = request.getParameter("enddate");
 		int rate = Integer.parseInt(request.getParameter("rate"));
-		if (!isValidDate(sd) || !isValidDate(ed))
+		if(rate<=0){
+			message = "fr";
+			session.setAttribute("p", message);
 			return "/peak.jsp";
+		}
+		if (!isValidDate(sd) || !isValidDate(ed)){
+			message = "dt";
+			session.setAttribute("p", message);
+			return "/peak.jsp";
+		}
 		Date s = parsedate(sd);
 		Date e = parsedate(ed);
-		if(s.after(e))
+		if(s.after(e)){
+			message = "fd";
+			session.setAttribute("p", message);
 			return "/peak.jsp";
+		}
 		String c = (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cd));
 		o.setPeak(n, c, sd, ed, rate);
+		message = "success";
+		session.setAttribute("p", message);
 		return "/ownersuccess.jsp";
 	}
 	  public boolean isValidDate(String sDate) {

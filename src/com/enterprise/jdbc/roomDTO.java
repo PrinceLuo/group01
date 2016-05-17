@@ -6,6 +6,7 @@ public class roomDTO {
 	private int hotel_id;
 	private int number;
 	private String availability;
+	private String roomtype;
 	private detailDTO detail;
 	
 	public roomDTO(){
@@ -48,6 +49,12 @@ public class roomDTO {
 	}
 	public void setAvailability(String availability){
 		this.availability = availability;
+	}
+	public String getType(){
+		return this.roomtype;
+	}
+	public void setType(String type){
+		this.roomtype = type;
 	}
 	public detailDTO getDetail(){
 		return this.detail;

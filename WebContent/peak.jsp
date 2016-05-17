@@ -11,11 +11,20 @@
 name: <input type = "text" name="name">
 Start date: <input type = "text" name="startdate" placeholder="YYYY-MM-DD">
 End date:<input type = "text" name="enddate" placeholder="YYYY-MM-DD">
-Rate:<input type = "text" name="rate" placeholder="higher than 0, lower than 100">
+Rate:<input type = "text" name="rate" placeholder="higher than 0">
 <input type="hidden" name="operation" value="setpeak" >
-<input type="submit" value="set discount">
+<input type="submit" value="set peak">
 </form>
 <input type="button" name="backthome" onclick="window.location.href='ownersuccess.jsp'" value="back to home page" >
-<input type="button" name="backtdiscount" onclick="window.location.href='discount.jsp'" value="set discount" >
+ 	<%String message =(String) session.getAttribute("p");
+ 	if ("fr".equals(message)){ %>
+ 	<h1>Please input right rate</h1>
+ 	<%session.setAttribute("p", null);} %>
+ 	<%if ("fd".equals(message)){ %>
+ 	<h1>Start date must before end date</h1>
+ 	<%session.setAttribute("p", null);} %>
+ 	<%if ("dt".equals(message)){ %>
+ 	<h1>Please follow the date format</h1>
+ 	<%session.setAttribute("p", null);} %>
 </body>
 </html>

@@ -33,31 +33,45 @@ public class DiscountCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		ownerDAOImpl o = new ownerDAOImpl();
-		if(request.getParameter("roomtypeid")==null){
+		String message = null;
+		
+		if(request.getParameter("hotelid")==null){
+			message = "noid";
+			session.setAttribute("d", message);
 			return "/discount.jsp"; 	
 		}
-		String roomtypeid = request.getParameter("roomtypeid");
+		int hotelid = Integer.parseInt(request.getParameter("hotelid"));
 		int rate = Integer.parseInt(request.getParameter("rate"));
-		if (rate<=0 || rate >=100)
+		if (rate<=0 || rate >=100){
+			message = "fr";
+			session.setAttribute("d", message);
 			return "/discount.jsp";
+		}
+		if(request.getParameter("roomtype")==null){
+			message = "nr";
+			session.setAttribute("d", message);
+			return "/discount.jsp"; 
+		}
+		String roomtype = request.getParameter("roomtype");
 		if(isValidDate(request.getParameter("startdate"), request.getParameter("startdate"))){
 			 this.sd =  parsedate(request.getParameter("startdate").trim()); 
 			 this.ed =  parsedate(request.getParameter("enddate").trim());
 			if(sd.after(ed) || sd.equals(ed)){
+				message = "fd";
+				session.setAttribute("d", message);
 				return "/discount.jsp";
 			}
-				
+				ownerDAOImpl o = new ownerDAOImpl();
 				discountDTO d = new discountDTO();
-				int id = Integer.parseInt(roomtypeid);
-				hotelDTO h = o.getHotelbyTypeid(id);
-				roomtypeDTO rt = o.getType(id);
+				hotelDTO h = o.getHotel(hotelid);
+				ownerDAOImpl o1 = new ownerDAOImpl();
+				roomtypeDTO rt = o1.getType(roomtype,hotelid);
 				d.setRate(rate);
 				d.setStartdate(dateFormat.format(this.sd));
 				d.setEnddate(dateFormat.format(this.ed));
-				d.setRoomtypeid(id);
+				d.setRoomtypeid(rt.getID());
 				d.setType(rt.getRoomtype());
-				d.setHotelid(h.getID());
+				d.setHotelid(hotelid);
 				d.setName(h.getName());
 				d.setLocation(h.getLocation());
 				session.setAttribute("discount", d);
@@ -65,6 +79,8 @@ public class DiscountCommand implements Command {
 				
 			
 		}else{
+			message = "dt";
+			session.setAttribute("d", message);
 			return "/discount.jsp";
 		}
 		

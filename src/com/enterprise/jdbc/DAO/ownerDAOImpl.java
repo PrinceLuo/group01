@@ -18,7 +18,7 @@ import com.enterprise.jdbc.roomtypeDTO;
 import com.enterprise.jdbc.staffDTO;
 
 public class ownerDAOImpl implements ownerDAO {
-	private Connection con;
+	private Connection con = null;
 	
 	public ownerDAOImpl() {
 		
@@ -32,6 +32,14 @@ public class ownerDAOImpl implements ownerDAO {
 	}
 	@Override
 	public staffDTO find(String username) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		staffDTO user = new staffDTO();
 		// TODO Auto-generated method stub
 		try{
@@ -43,8 +51,8 @@ public class ownerDAOImpl implements ownerDAO {
 				
 				user.setID(rs.getInt("id"));
 				user.setUsername(rs.getString("username"));
-				user.setPassword(rs.getString("paswword"));
-				user.setType(rs.getString("type"));
+				user.setPassword(rs.getString("password"));
+				user.setType(rs.getString("staff_type"));
 				stmt.close();
 				return user;
 			}
@@ -65,6 +73,14 @@ public class ownerDAOImpl implements ownerDAO {
 	}
 	@Override
 	public List<roomDTO> getRooms(int hotel_id, int room_type_id) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		List<roomDTO> rooms = new ArrayList<roomDTO>();
 		try{
 			PreparedStatement stmt  = con.prepareStatement("select * from room where hotel_id = ? and room_type_id = ?");
@@ -95,6 +111,14 @@ public class ownerDAOImpl implements ownerDAO {
 
 	@Override
 	public List<hotelDTO> getHotels() throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		List<hotelDTO> hotels = new ArrayList<hotelDTO>();
 		// TODO Auto-generated method stub
 		try{
@@ -136,13 +160,35 @@ public class ownerDAOImpl implements ownerDAO {
 
 	@Override
 	public void setMaintenance(int roomid) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		// TODO Auto-generated method stub
 		try{
 			PreparedStatement stmt  = con.prepareStatement("update room set availability = 'maintenance' where id = ? ");
 			stmt.setInt(1, roomid);
-			int rs = stmt.executeUpdate();
-			if(rs!=1)
-				System.out.println("set maintenance error");
+			stmt.executeUpdate();
+			//PreparedStatement stmt1  = con.prepareStatement("select room_type_id from room where id = ? ");
+			//stmt1.setInt(1, roomid);
+			//ResultSet rs = stmt1.executeQuery();
+			//int id = rs.getInt("room_type_id");
+			//PreparedStatement stmt2 = con.prepareStatement("select total_num from room_type where id=? ");
+			//stmt2.setInt(1, id);
+			//int cur_num = rs.getInt("total_num");
+			//cur_num = cur_num -1;
+			//PreparedStatement stmt3  = con.prepareStatement("update room_type set total_num = ? where id = ? ");
+			//stmt3.setInt(1, cur_num);
+			//stmt3.setInt(2, id);
+			//stmt3.executeUpdate();
+			stmt.close();
+			//stmt1.close();
+			//stmt2.close();
+			//stmt3.close();
 		}catch (SQLException e) {
 			throw new DataAccessException("Unable to execute query; " + e.getMessage(), e);
 		} finally{
@@ -158,14 +204,24 @@ public class ownerDAOImpl implements ownerDAO {
 	}
 	@Override
 	public boolean checkAvailabiblity(int roomid) throws DataAccessException{
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try{
 			PreparedStatement stmt  = con.prepareStatement("select availability from room where id = ?");
 			stmt.setInt(1, roomid);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()){
-				if (rs.getString("availability") == "available" )
+				if ("available".equals(rs.getString("availability")) )
 					return true;
+				return false;
 			}
+			stmt.close();
 				
 		} catch (SQLException e) {
 			throw new DataAccessException("Unable to execute query; " + e.getMessage(), e);
@@ -183,6 +239,14 @@ public class ownerDAOImpl implements ownerDAO {
 
 	@Override
 	public void insertDiscount(discountDTO discount) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		// TODO Auto-generated method stub
 		try{
 			PreparedStatement stmt  = con.prepareStatement("insert into discount (id,room_type_id,hotel_id,cur_date,start_date,end_date,rate) values (default,?,?,?,?,?,?)");
@@ -210,6 +274,14 @@ public class ownerDAOImpl implements ownerDAO {
 
 	@Override
 	public void setPeak(String name, String current, String start, String end, int rate) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try{
 			PreparedStatement stmt = con.prepareStatement("insert into peak (id, name, cur_date, start_date, end_date, rate) values (default,?,?,?,?,?)");
 			stmt.setString(1, name);
@@ -236,6 +308,14 @@ public class ownerDAOImpl implements ownerDAO {
 	@Override
 	public List<roomtypeDTO> getRoomtype(int hotel_id) throws DataAccessException {
 		// TODO Auto-generated method stub
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		List<roomtypeDTO> roomt = new ArrayList<roomtypeDTO>();
 		try{
 			PreparedStatement stmt  = con.prepareStatement("select * from room_type where hotel_id = ?");
@@ -263,11 +343,18 @@ public class ownerDAOImpl implements ownerDAO {
 		}	
 	}
 	@Override
-	public hotelDTO getHotelbyTypeid(int room_type_id) throws DataAccessException {
-		
+	public hotelDTO getHotel(int id) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try{
-			PreparedStatement stmt  = con.prepareStatement("select * from hotel where id=(select hotel_id from room_type where id = ?)");
-			stmt.setInt(1, room_type_id);
+			PreparedStatement stmt  = con.prepareStatement("select * from hotel where id=?");
+			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()){
 				hotelDTO h = new hotelDTO();
@@ -292,11 +379,19 @@ public class ownerDAOImpl implements ownerDAO {
 		return null;
 	}
 	@Override
-	public roomtypeDTO getType(int id) throws DataAccessException {
-		// TODO Auto-generated method stub
+	public roomtypeDTO getType(String type, int hotelid) throws DataAccessException {
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try{
-			PreparedStatement stmt  = con.prepareStatement("select * from room_type where id = ?");
-			stmt.setInt(1, id);
+			PreparedStatement stmt  = con.prepareStatement("select * from room_type where hotel_id = ? and room_type = ?");
+			stmt.setInt(1, hotelid);
+			stmt.setString(2, type);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()){
 				roomtypeDTO r = new roomtypeDTO();
@@ -318,6 +413,43 @@ public class ownerDAOImpl implements ownerDAO {
 			}
 		}
 		return null;
+	}
+	@Override
+	public List<roomDTO> getRoomsbyHotel(int hotel_id) throws DataAccessException {
+		// TODO Auto-generated method stub
+		if (con == null){
+			try {
+				con = DBConnectionFactory.getConnection();
+			} catch (ServiceLocatorException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		List<roomDTO> rooms = new ArrayList<roomDTO>();
+		try{
+			PreparedStatement stmt  = con.prepareStatement("select * from room where hotel_id = ?");
+			stmt.setInt(1, hotel_id);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				roomDTO r = new roomDTO();
+				r.setID(rs.getInt("id"));
+				r.setNumber(rs.getInt("room_number"));
+				r.setAvailability(rs.getString("availability"));
+				rooms.add(r);
+			}
+			stmt.close();
+			return rooms;
+		} catch (SQLException e) {
+			throw new DataAccessException("Unable to execute query; " + e.getMessage(), e);
+		} finally{
+			if (con != null){
+				try {
+					con.close();
+				} catch (SQLException e1){
+					e1.printStackTrace();
+				}
+			}
+		}	
 	}
 
 

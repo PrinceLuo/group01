@@ -18,31 +18,46 @@
 		<tr>
 			<th>hotel name</th>
 			<th>hotel location</th>
-			<th>room type</th>
 		</tr>
 		<c:forEach var="hotel" items="${hotels}">
 		<tr>
 			<td>${hotel.getName() }</td>
 			<td>${hotel.getLocation() }</td>
-			<td><div>
-				<table border = "1">
-				<c:forEach var="roomtype" items="${hotel.getRoomtypelist()} }">
-				<tr><td>${roomtype.getRoomtype()}</td>
-					<td><input type="radio" name="roomtypeid" value=${roomtype.getID() }></td>
-				</tr>
-				</c:forEach>
-				</table>
-				</div>
-			</td>
+			<td><input type="radio" name="hotelid" value=${hotel.getID() }></td>
 		</tr>
 		</c:forEach>
 	</table>
+Room type:
+<select name="roomtype">
+	<option value = "Single">Single</option>
+	<option value = "Twin">Twin</option>
+	<option value = "Queen">Queen</option>
+	<option value = "Executive">Executive</option>
+	<option value = "Suite">Suite</option>
+</select>
 Start date: <input type = "text" name="startdate" placeholder="YYYY-MM-DD">
 End date:<input type = "text" name="enddate" placeholder="YYYY-MM-DD">
-Rate:<input type = "text" name="rate" placeholder="higher than 0, lower than 100">
+Rate:<input type = "text" name="rate" placeholder="between 0 to 100">
 <input type="hidden" name="operation" value="setdiscount" />
 <input type="submit" value="set discount">
 </form>
 <input type="button" name="back" onclick="window.location.href='ownersuccess.jsp'" value="back to home page" >
+	<% String message =(String) session.getAttribute("d");
+ 	if("noid".equals(message)){
+ 	%><h1>Choose one hotel and try again!</h1>
+ 	<%session.setAttribute("d", null);} %>
+ 	<%if ("fr".equals(message)){ %>
+ 	<h1>Please input right rate</h1>
+ 	<%session.setAttribute("d", null);} %>
+ 	<%if ("fd".equals(message)){ %>
+ 	<h1>Start date must before end date</h1>
+ 	<%session.setAttribute("d", null);} %>
+ 	<%if ("dt".equals(message)){ %>
+ 	<h1>Please follow the date format</h1>
+ 	<%session.setAttribute("d", null);} %>
+ 	<%if ("nr".equals(message)){ %>
+ 	<h1>Please choose one room type</h1>
+ 	<%session.setAttribute("d", null);} %>
+ 	
 </body>
 </html>
