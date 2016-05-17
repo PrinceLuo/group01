@@ -1,7 +1,6 @@
 package com.enterprise.jdbc.DAO;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.enterprise.beans.RoomBean;

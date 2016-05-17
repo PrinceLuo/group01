@@ -21,6 +21,7 @@
  insert into room_type values (default, 'Suite', 400, 1, 1);
  
  insert into room values (default, 1, 1, 101,'available');
+<<<<<<< HEAD
  insert into room values (default, 1, 1, 102,'available');
  insert into room values (default, 1, 1, 103,'available');
  insert into room values (default, 2, 1, 201,'available');
@@ -29,6 +30,10 @@
  insert into room values (default, 3, 1, 204,'available');
  insert into room values (default, 4, 1, 301,'available');
  insert into room values (default, 5, 1, 302,'available');
+=======
+ insert into room values (default, 2, 1, 111,'occupied');
+ insert into room values (default, 3, 1, 121,'maintenance');
+>>>>>>> origin/master
  
  
  -- Mecure hotel
@@ -99,6 +104,7 @@
  insert into room values (default, 25, 5, 302,'available');
  
  -- Baileys hotel
+<<<<<<< HEAD
  insert into room_type values (default, 'Single', 80, 3, 6);
  insert into room_type values (default, 'Twin', 100, 2, 6);
  insert into room_type values (default, 'Queen', 200, 2, 6);
@@ -121,3 +127,11 @@
  
  
  
+=======
+ insert into room_type values (default, 'Single', 80, 50, 6);
+ insert into room_type values (default, 'Twin', 100, 150, 6);
+ insert into room_type values (default, 'Queen', 200, 120, 6);
+ insert into room_type values (default, 'Executive', 300, 100, 6);
+ insert into room_type values (default, 'Suite', 400, 100, 6);
+ insert into room values (default, 26, 6, 101, 'available');
+>>>>>>> origin/master

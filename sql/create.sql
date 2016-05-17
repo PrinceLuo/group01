@@ -16,10 +16,10 @@ create table staff(
 	username varchar(20) not null unique,
 	password varchar(20) not null,
 	staff_type varchar(10) not null,
+	hotel_id int not null,
 	constraint chk_staff_type check (staff_type = 'owner' or staff_type = 'manager'),
 	primary key (id)
 );
-
 
 --room information
 create table hotel (
@@ -103,8 +103,14 @@ create table booking(
 create table detail(
 	id int not null generated always as identity,
 	booking_id int not null,
+<<<<<<< HEAD
 	start_date varchar(10) not null,
 	end_date varchar(10) not null,
+=======
+	--cur_date date not null,
+	--start_date date not null,
+	--end_date date not null,
+>>>>>>> origin/master
 	hotel_id int not null,
 	room_type_id int not null,
 	extra_bed int not null,

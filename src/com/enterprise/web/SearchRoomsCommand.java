@@ -34,10 +34,17 @@ public class SearchRoomsCommand implements Command{
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		//surround below line with try catch block as below code throws checked exception
 		try {
+<<<<<<< HEAD
 			Date dDate = sdf.parse(request.getParameter("checkin"));
 			sb.setCheckIn(dDate);
 			Date dDate2 = sdf.parse(request.getParameter("checkout"));
 			sb.setCheckOut(dDate2);
+=======
+		Date dDate = sdf.parse(request.getParameter("checkin"));
+		sb.setCheckIn(dDate);
+		Date dDate2 = sdf.parse(request.getParameter("checkout"));
+		sb.setCheckOut(dDate2);
+>>>>>>> origin/master
 		}
 		catch (Exception e)
 		{

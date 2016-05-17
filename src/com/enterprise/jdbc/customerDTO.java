@@ -13,6 +13,7 @@ public class customerDTO {
 	private String address;
 	private String cardnum;
 	private String cardtype;
+	//private String cardexpirydate;
 	private List<bookingDTO> bookinglist;
 	
 	public customerDTO(){
@@ -126,6 +127,13 @@ public class customerDTO {
 	public void setCardtype(String cardtype) {
 		this.cardtype = cardtype;
 	}
+	
+	/**
+	 * @param cardexpirydate the cardexpirydate to set
+	 */
+	//public void setcardexpirydate(String cardexpirydate) {
+	//	this.cardexpirydate = cardexpirydate;
+	//}
 
 	
 }
